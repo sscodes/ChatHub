@@ -1,11 +1,14 @@
-import Register from "./containers/Register"
+import { Route, Routes } from 'react-router-dom';
+import Register from './containers/Register';
 
 function App() {
   return (
-    <div>
-      <Register />
-    </div>
-  )
+    <>
+      <Routes>
+        <Route path='/register' element={<Register />} />
+      </Routes>
+    </>
+  );
 }
 
-export default App
+export default App;
