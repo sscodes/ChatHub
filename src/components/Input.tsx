@@ -9,21 +9,28 @@ import { ReactElement, ReactNode } from 'react';
 interface InputPropTypes {
   label: string;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onBlur: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   type: string;
+  name: string;
+  value?: string;
   error?: boolean;
   helperText?: ReactNode;
   InputProps?:
     | Partial<FilledInputProps>
     | Partial<OutlinedInputProps>
-    | Partial<InputProps> | undefined;
+    | Partial<InputProps>
+    | undefined;
 }
 
 const Input = ({
   label,
   onChange,
+  onBlur,
   type,
-  error=false,
-  helperText=null,
+  name,
+  value,
+  error = false,
+  helperText = null,
   InputProps,
 }: InputPropTypes): ReactElement => {
   return (
@@ -33,8 +40,11 @@ const Input = ({
         variant='outlined'
         type={type}
         fullWidth
+        name={name}
         required
+        value={value}
         onChange={onChange}
+        onBlur={onBlur}
         style={{ backgroundColor: '#dfab62' }}
         color='warning'
         error={error}

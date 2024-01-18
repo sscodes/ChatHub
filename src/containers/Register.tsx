@@ -1,51 +1,53 @@
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { Box, Button, Stack, Typography, createTheme } from '@mui/material';
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import {
-  ChangeEvent,
-  MouseEvent,
-  ReactElement,
-  useEffect,
-  useState,
-} from 'react';
+  Avatar,
+  Box,
+  Button,
+  Stack,
+  Typography,
+  createTheme,
+} from '@mui/material';
+import { useFormik } from 'formik';
+import { ReactElement, useState } from 'react';
 import { Link } from 'react-router-dom';
+// import { ToastContainer, ToastPosition, toast } from 'react-toastify';
 import Input from '../components/Input';
 import Title from '../components/Title';
+import { registerSchema } from '../config/schema';
+
+interface valuesTypes {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  file: File | null;
+}
+
+const initialValues: valuesTypes = {
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  file: null,
+};
 
 const Register = (): ReactElement => {
-  const [username, setUsername] = useState<string>();
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
-  const [confirmPassword, setConfirmPassword] = useState<string | null>(null);
-  const [passwordMismatch, setPasswordMismatch] = useState<boolean>(false);
-  const [passwordMessage, setPasswordMessage] = useState<string | null>(null);
   const [passwordField, setPasswordField] = useState<string>('password');
   const [confirmPasswordField, setConfirmPasswordField] =
     useState<string>('password');
 
-  useEffect(() => {
-    if (password && password.length > 0 && password.length < 7)
-      setPasswordMessage('Length of password should be at least 7 characters');
-    else if (password && password.length > 0 && !/\d/.test(password))
-      setPasswordMessage('Password should have at least one numeric character');
-    else if (
-      password &&
-      password.length > 0 &&
-      // eslint-disable-next-line no-useless-escape
-      !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(password)
-    )
-      setPasswordMessage('Password should have at least one special character');
-    else setPasswordMessage(null);
-  }, [password]);
-
-  useEffect(() => {
-    if (password === '' || confirmPassword === '') setPasswordMismatch(false);
-    else if (confirmPassword !== null && password !== confirmPassword)
-      setPasswordMismatch(true);
-    else setPasswordMismatch(false);
-  }, [password, confirmPassword]);
+  const Formik = useFormik({
+    initialValues,
+    validationSchema: registerSchema,
+    validateOnChange: true,
+    validateOnBlur: true,
+    onSubmit: (values, action) => {
+      console.log(values);
+      action.resetForm();
+    },
+  });
 
   const theme = createTheme({
     palette: {
@@ -56,26 +58,21 @@ const Register = (): ReactElement => {
     },
   });
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0];
+  // const notificationProperties = {
+  //   position: 'top-center' as ToastPosition,
+  //   autoClose: 2000,
+  //   hideProgressBar: false,
+  //   closeOnClick: true,
+  //   pauseOnHover: true,
+  //   draggable: true,
+  //   progress: undefined,
+  //   theme: 'colored',
+  // };
 
-    if (file && file.type.startsWith('image/')) {
-      // If it's an image file, set the selected file
-      setSelectedFile(file);
-    } else {
-      // If it's not an image file, reset the selected file
-      setSelectedFile(null);
-      alert('Please select a valid image file.');
-    }
-  };
+  // const notifyError = (error: string) =>
+  //   toast.error(error, notificationProperties);
 
-  const register = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    console.log(username);
-    console.log(email);
-    console.log(password);
-    console.log(selectedFile);
-  };
+  //TODO: perform username availability check
 
   return (
     <>
@@ -94,7 +91,6 @@ const Register = (): ReactElement => {
             width: '25rem',
             backgroundColor: '#ff9800',
           }}
-          component='form'
         >
           <div style={{ textAlign: 'center' }}>
             <Typography variant='h5' gutterBottom>
@@ -104,26 +100,56 @@ const Register = (): ReactElement => {
           <Stack
             spacing={2}
             direction='column'
+            component={'form'}
             style={{ display: 'flex', width: '400px' }}
+            onSubmit={Formik.handleSubmit}
           >
             <Input
               label='Username'
               type='text'
-              onChange={(e) => setUsername(e.target.value)}
+              name='username'
+              value={Formik.values.username}
+              onChange={Formik.handleChange}
+              onBlur={Formik.handleBlur}
+              error={
+                Formik.touched.username && Formik.errors.username ? true : false
+              }
+              helperText={
+                Formik.touched.username &&
+                Formik.errors.username && (
+                  <b style={{ color: 'red' }}>{Formik.errors.username}</b>
+                )
+              }
             />
             <Input
               label='Email'
               type='email'
-              onChange={(e) => setEmail(e.target.value)}
+              name='email'
+              value={Formik.values.email}
+              onChange={Formik.handleChange}
+              onBlur={Formik.handleBlur}
+              error={Formik.touched.email && Formik.errors.email ? true : false}
+              helperText={
+                Formik.touched.email &&
+                Formik.errors.email && (
+                  <b style={{ color: 'red' }}>{Formik.errors.email}</b>
+                )
+              }
             />
             <Input
               label='Password'
               type={passwordField}
-              error={passwordMessage === null ? false : true}
-              onChange={(e) => setPassword(e.target.value)}
+              name='password'
+              value={Formik.values.password}
+              onChange={Formik.handleChange}
+              onBlur={Formik.handleBlur}
+              error={
+                Formik.touched.password && Formik.errors.password ? true : false
+              }
               helperText={
-                passwordMessage !== null && (
-                  <b style={{ color: 'red' }}>{passwordMessage}</b>
+                Formik.touched.password &&
+                Formik.errors.password && (
+                  <b style={{ color: 'red' }}>{Formik.errors.password}</b>
                 )
               }
               InputProps={{
@@ -148,11 +174,21 @@ const Register = (): ReactElement => {
             <Input
               label='Confirm Password'
               type={confirmPasswordField}
-              error={passwordMismatch}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              name='confirmPassword'
+              value={Formik.values.confirmPassword}
+              onChange={Formik.handleChange}
+              onBlur={Formik.handleBlur}
+              error={
+                Formik.touched.confirmPassword && Formik.errors.confirmPassword
+                  ? true
+                  : false
+              }
               helperText={
-                passwordMismatch && (
-                  <b style={{ color: 'red' }}>Passwords do not match.</b>
+                Formik.touched.confirmPassword &&
+                Formik.errors.confirmPassword && (
+                  <b style={{ color: 'red' }}>
+                    {Formik.errors.confirmPassword}
+                  </b>
                 )
               }
               InputProps={{
@@ -181,26 +217,58 @@ const Register = (): ReactElement => {
               }}
             >
               <input
-                accept='image/*' // Specify accepted file types if needed
+                accept='.png, .jpg, .jpeg'
                 style={{ display: 'none' }}
                 id='file-input'
                 type='file'
-                onChange={handleFileChange}
+                name='file'
+                onChange={(e) => {
+                  Formik.setFieldValue('file', e.target.files?.[0] || null);
+                }}
               />
               <label htmlFor='file-input'>
                 <Button
                   variant='contained'
+                  component='span'
                   style={{ backgroundColor: theme.palette.warning.dark }}
                 >
-                  Set Profile Picture
+                  <Stack direction={'row'} spacing={1}>
+                    <Avatar>
+                      <AddPhotoAlternateIcon />
+                    </Avatar>
+                    <Typography
+                      variant='subtitle2'
+                      style={{
+                        marginTop: '0.7rem',
+                        color: 'white',
+                      }}
+                    >
+                      Set Profile Picture
+                    </Typography>
+                  </Stack>
                 </Button>
               </label>
-              {selectedFile && <p>Selected File: {selectedFile.name}</p>}
+              {Formik.errors.file && Formik.touched.file ? (
+                <Typography
+                  variant='subtitle2'
+                  style={{
+                    color: 'white',
+                    backgroundColor: 'red',
+                    padding: '0.2rem',
+                    marginTop: '0.4rem',
+                  }}
+                >
+                  {Formik.errors.file}
+                </Typography>
+              ) : null}
+              {Formik.values.file && (
+                <p>Selected File: {Formik.values.file.name}</p>
+              )}
             </div>
             <Button
               variant='contained'
               style={{ backgroundColor: theme.palette.warning.dark }}
-              onClick={register}
+              type='submit'
             >
               Register
             </Button>
@@ -215,6 +283,7 @@ const Register = (): ReactElement => {
           </div>
         </Box>
       </Box>
+      {/* <ToastContainer /> */}
     </>
   );
 };
