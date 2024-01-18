@@ -13,7 +13,7 @@ const Title = (): ReactElement => {
     >
       <Box
         style={{
-          backgroundColor: '#ff9800',
+          color: '#ff9800',
           padding: '0.4rem',
           width: '10rem',
           textAlign: 'center',
@@ -24,10 +24,11 @@ const Title = (): ReactElement => {
           <b>Chat</b>
           <b
             style={{
-              backgroundColor: 'black',
-              color: '#ff9800',
+              backgroundColor: '#ff9800',
+              color: 'black',
               borderRadius: '0.4rem',
               padding: '0.2rem',
+              marginLeft: '0.2rem'
             }}
           >
             Hub
