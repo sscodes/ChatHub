@@ -1,3 +1,35 @@
 body {
   background-color: #000000;
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 0.7rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-left: 0.1rem solid orange;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: orange;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(251, 138, 17);
+}
+
+.inbox {
+  transition: 300ms;
+  color: orange;
+}
+
+.inbox:hover {
+  background-color: orange;
+  cursor: pointer;
+  transition: 300ms;
+  color: black;
+}

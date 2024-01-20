@@ -1,34 +1,33 @@
 import { Grid } from '@mui/material';
 import Left from '../components/Left';
+import Right from '../components/Right';
 
 const Home = () => {
   return (
-    <Grid
+    <div
       style={{
-        height: '95vh',
-        width: '80vw',
-        border: '2px solid white',
+        display: 'grid',
+        justifyContent: 'center',
       }}
-      mt={2}
-      container
     >
       <Grid
-        md={4}
         style={{
-          border: '2px solid white',
+          width: '80vw',
         }}
-        item
+        border={4}
+        borderColor={'orange'}
+        borderRadius={3}
+        mt={2}
+        container
       >
-        <Left />
+        <Grid md={4} item borderRight={3} borderColor={'orange'}>
+          <Left />
+        </Grid>
+        <Grid md={8} item>
+          <Right />
+        </Grid>
       </Grid>
-      <Grid
-        md={8}
-        style={{
-          border: '2px solid white',
-        }}
-        item
-      ></Grid>
-    </Grid>
+    </div>
   );
 };
 
