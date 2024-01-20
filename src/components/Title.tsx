@@ -8,16 +8,10 @@ const Title = (): ReactElement => {
         display: 'grid',
         placeItems: 'center',
       }}
-      marginBottom={-1}
-      marginTop={2}
     >
       <Box
         style={{
           color: '#ff9800',
-          padding: '0.4rem',
-          width: '10rem',
-          textAlign: 'center',
-          borderRadius: '0.7rem',
         }}
       >
         <Typography variant='h6'>
@@ -28,7 +22,7 @@ const Title = (): ReactElement => {
               color: 'black',
               borderRadius: '0.4rem',
               padding: '0.2rem',
-              marginLeft: '0.2rem'
+              marginLeft: '0.2rem',
             }}
           >
             Hub
