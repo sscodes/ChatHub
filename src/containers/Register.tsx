@@ -1,20 +1,31 @@
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import {
+  Alert,
   Avatar,
   Box,
   Button,
+  Slide,
+  SlideProps,
+  Snackbar,
   Stack,
   Typography,
   createTheme,
 } from '@mui/material';
+import {
+  UserCredential,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { useFormik } from 'formik';
 import { ReactElement, useState } from 'react';
-import { Link } from 'react-router-dom';
-// import { ToastContainer, ToastPosition, toast } from 'react-toastify';
+import { Link, useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 import Title from '../components/Title';
+import { auth, db, storage } from '../config/firebase';
 import { registerSchema } from '../config/schema';
 
 interface valuesTypes {
@@ -33,18 +44,75 @@ const initialValues: valuesTypes = {
   file: null,
 };
 
+const SlideTransition = (props: SlideProps) => {
+  return <Slide {...props} direction='up' />;
+}
+
 const Register = (): ReactElement => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [passwordField, setPasswordField] = useState<string>('password');
   const [confirmPasswordField, setConfirmPasswordField] =
     useState<string>('password');
+
+  const navigate = useNavigate();
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+    setErrorMessage('');
+  };
 
   const Formik = useFormik({
     initialValues,
     validationSchema: registerSchema,
     validateOnChange: true,
     validateOnBlur: true,
-    onSubmit: (values, action) => {
-      console.log(values);
+    onSubmit: async (values, action) => {
+      try {
+        const res: UserCredential = await createUserWithEmailAndPassword(
+          auth,
+          values.email,
+          values.password
+        );
+
+        const storageRef = ref(storage, values.username);
+        const uploadTask = uploadBytesResumable(storageRef, values.file);
+
+        uploadTask.on(
+          (error) => {
+            setOpen(true);
+            setErrorMessage(error.code);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then(
+              async (downloadURL) => {
+                await updateProfile(res.user, {
+                  displayName: values.username,
+                  photoURL: downloadURL,
+                });
+                await setDoc(doc(db, 'users', res.user.uid), {
+                  uid: res.user.uid,
+                  username: values.username,
+                  email: values.email,
+                  photoURL: downloadURL,
+                });
+                await setDoc(doc(db, 'userChats', res.user.uid), {});
+                navigate('/');
+              }
+            );
+          }
+        );
+      } catch (error) {
+        setOpen(true);
+        setErrorMessage(error.code);
+      }
       action.resetForm();
     },
   });
@@ -58,20 +126,6 @@ const Register = (): ReactElement => {
     },
   });
 
-  // const notificationProperties = {
-  //   position: 'top-center' as ToastPosition,
-  //   autoClose: 2000,
-  //   hideProgressBar: false,
-  //   closeOnClick: true,
-  //   pauseOnHover: true,
-  //   draggable: true,
-  //   progress: undefined,
-  //   theme: 'colored',
-  // };
-
-  // const notifyError = (error: string) =>
-  //   toast.error(error, notificationProperties);
-
   //TODO: perform username availability check
 
   return (
@@ -79,7 +133,7 @@ const Register = (): ReactElement => {
       <Title />
       <Box
         display={'grid'}
-        height={'90vh'}
+        mt={1}
         style={{
           placeItems: 'center',
         }}
@@ -274,7 +328,21 @@ const Register = (): ReactElement => {
           </Box>
         </Box>
       </Box>
-      {/* <ToastContainer /> */}
+      <Snackbar
+        open={open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        TransitionComponent={SlideTransition}
+      >
+        <Alert
+          onClose={handleClose}
+          severity='error'
+          variant='filled'
+          style={{ width: '100%' }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

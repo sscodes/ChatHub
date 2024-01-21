@@ -1,33 +1,73 @@
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { Box, Button, Stack, Typography, createTheme } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  Slide,
+  SlideProps,
+  Snackbar,
+  Stack,
+  Typography,
+  createTheme,
+} from '@mui/material';
+import { User, signInWithEmailAndPassword } from 'firebase/auth';
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 import Title from '../components/Title';
+import { auth } from '../config/firebase';
 import { loginSchema } from '../config/schema';
 
 interface valuesTypes {
-  username: string;
+  email: string;
   password: string;
 }
 
 const initialValues: valuesTypes = {
-  username: '',
+  email: '',
   password: '',
 };
 
+const SlideTransition = (props: SlideProps) => {
+  return <Slide {...props} direction='up' />;
+};
+
 const Login = () => {
+  const [open, setOpen] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const [passwordField, setPasswordField] = useState<string>('password');
+
+  const navigate = useNavigate();
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+    setErrorMessage('');
+  };
 
   const Formik = useFormik({
     initialValues,
     validationSchema: loginSchema,
     validateOnChange: true,
     validateOnBlur: true,
-    onSubmit: (values, action) => {
+    onSubmit: async (values, action) => {
       console.log(values);
+      try {
+        await signInWithEmailAndPassword(auth, values.email, values.password);
+        navigate('/');
+      } catch (error) {
+        setOpen(true);
+        setErrorMessage(error.code);
+      }
+
       action.resetForm();
     },
   });
@@ -62,22 +102,20 @@ const Login = () => {
             direction='column'
             display={'flex'}
             width={'400px'}
-            component='form'
+            component={'form'}
             onSubmit={Formik.handleSubmit}
           >
             <Input
-              label='Username'
-              name='username'
+              label='Email'
+              name='email'
               type='text'
               onChange={Formik.handleChange}
               onBlur={Formik.handleBlur}
-              error={
-                Formik.touched.username && Formik.errors.username ? true : false
-              }
+              error={Formik.touched.email && Formik.errors.email ? true : false}
               helperText={
-                Formik.touched.username &&
-                Formik.errors.username && (
-                  <b style={{ color: 'red' }}>{Formik.errors.username}</b>
+                Formik.touched.email &&
+                Formik.errors.email && (
+                  <b style={{ color: 'red' }}>{Formik.errors.email}</b>
                 )
               }
             />
@@ -133,6 +171,21 @@ const Login = () => {
           </Box>
         </Box>
       </Box>
+      <Snackbar
+        open={open}
+        autoHideDuration={5000}
+        onClose={handleClose}
+        TransitionComponent={SlideTransition}
+      >
+        <Alert
+          onClose={handleClose}
+          severity='error'
+          variant='filled'
+          style={{ width: '100%' }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </>
   );
 };

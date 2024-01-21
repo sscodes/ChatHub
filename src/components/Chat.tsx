@@ -6,14 +6,14 @@ const Chat = () => {
     <Box height={'25rem'} style={{ overflowY: 'auto' }}>
       <Grid container>
         <Grid item xs={12} display={'flex'} justifyItems={'start'} py={1}>
-          <Grid xs={6}>
-            <Message />
+          <Grid item xs={6}>
+            <Message type='friend' />
           </Grid>
-          <Grid xs={6}></Grid>
+          <Grid item xs={6}></Grid>
         </Grid>
         <Grid item xs={12} display={'flex'} py={1}>
-          <Grid xs={6}></Grid>
-          <Grid xs={6}>
+          <Grid item xs={6}></Grid>
+          <Grid item xs={6}>
             <Message type='user' />
           </Grid>
         </Grid>

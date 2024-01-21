@@ -50,8 +50,8 @@ const Inboxes = () => {
           image: '../../Sanket-Photo.jpeg',
           username: 'username',
         },
-      ].map((user: userType) => (
-        <Inbox image={user.image} username={user.username} />
+      ].map((user: userType, i: number) => (
+        <Inbox image={user.image} username={user.username} key={i} />
       ))}
     </Box>
   );

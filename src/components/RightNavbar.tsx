@@ -1,4 +1,6 @@
 import { Avatar, Button, Grid, Typography } from '@mui/material';
+import { signOut } from 'firebase/auth';
+import { auth } from '../config/firebase';
 
 const RightNavbar = () => {
   return (
@@ -25,7 +27,12 @@ const RightNavbar = () => {
         justifyItems={'end'}
         alignItems={'center'}
       >
-        <Button variant='contained' color='warning' size='small'>
+        <Button
+          variant='contained'
+          color='warning'
+          size='small'
+          onClick={() => signOut(auth)}
+        >
           Logout
         </Button>
       </Grid>

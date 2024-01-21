@@ -1,9 +1,9 @@
 import { Avatar, Box, Grid, Typography } from '@mui/material';
 
 interface MessagePropType {
-  type?: string;
+  type: string;
 }
-const Message = ({ type = 'friend' }: MessagePropType) => {
+const Message = ({ type }: MessagePropType) => {
   return (
     <>
       <Grid container>
@@ -23,7 +23,7 @@ const Message = ({ type = 'friend' }: MessagePropType) => {
         )}
         <Grid item xs={9}>
           <Box
-            border={type !== 'user' ? '0.2rem' : '0'}
+            border={2}
             borderColor={'orange'}
             borderRadius={
               type === 'user' ? '1rem 0 1rem 1rem' : '0 1rem 1rem 1rem'
