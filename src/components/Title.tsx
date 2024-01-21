@@ -4,16 +4,12 @@ import { ReactElement } from 'react';
 const Title = (): ReactElement => {
   return (
     <Box
+      display={'grid'}
       style={{
-        display: 'grid',
         placeItems: 'center',
       }}
     >
-      <Box
-        style={{
-          color: '#ff9800',
-        }}
-      >
+      <Box color={'#ff9800'}>
         <Typography variant='h6'>
           <b>Chat</b>
           <b

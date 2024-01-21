@@ -1,19 +1,12 @@
-import { Grid } from '@mui/material';
+import { Box, Grid } from '@mui/material';
 import Left from '../components/Left';
 import Right from '../components/Right';
 
 const Home = () => {
   return (
-    <div
-      style={{
-        display: 'grid',
-        justifyContent: 'center',
-      }}
-    >
+    <Box display={'grid'} justifyContent={'center'}>
       <Grid
-        style={{
-          width: '80vw',
-        }}
+        width={'80vw'}
         border={4}
         borderColor={'orange'}
         borderRadius={3}
@@ -27,7 +20,7 @@ const Home = () => {
           <Right />
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

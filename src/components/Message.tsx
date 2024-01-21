@@ -23,13 +23,10 @@ const Message = ({ type = 'friend' }: MessagePropType) => {
         )}
         <Grid item xs={9}>
           <Box
-            style={
-              type === 'user'
-                ? { borderRadius: '1rem 0 1rem 1rem' }
-                : {
-                    border: '0.2rem solid orange',
-                    borderRadius: '0 1rem 1rem 1rem',
-                  }
+            border={type !== 'user' ? '0.2rem' : '0'}
+            borderColor={'orange'}
+            borderRadius={
+              type === 'user' ? '1rem 0 1rem 1rem' : '0 1rem 1rem 1rem'
             }
             bgcolor={type === 'user' ? 'warning.light' : 'black'}
             color={type === 'user' ? 'black' : 'warning.light'}

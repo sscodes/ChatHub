@@ -78,20 +78,13 @@ const Register = (): ReactElement => {
     <>
       <Title />
       <Box
+        display={'grid'}
+        height={'90vh'}
         style={{
-          display: 'grid',
           placeItems: 'center',
-          height: '90vh',
         }}
       >
-        <Box
-          style={{
-            borderRadius: '2%',
-            padding: '1.4%',
-            width: '25rem',
-            backgroundColor: '#ff9800',
-          }}
-        >
+        <Box bgcolor={'#ff9800'} width={'25rem'} p={2} borderRadius={'2%'}>
           <div style={{ textAlign: 'center' }}>
             <Typography variant='h5' gutterBottom>
               <b>Chat Now: Quick Sign-Up!</b>
@@ -101,7 +94,8 @@ const Register = (): ReactElement => {
             spacing={2}
             direction='column'
             component={'form'}
-            style={{ display: 'flex', width: '400px' }}
+            display={'flex'}
+            width={'400px'}
             onSubmit={Formik.handleSubmit}
           >
             <Input
@@ -210,9 +204,9 @@ const Register = (): ReactElement => {
                 ),
               }}
             />
-            <div
+            <Box
+              display={'grid'}
               style={{
-                display: 'grid',
                 placeItems: 'center',
               }}
             >
@@ -232,17 +226,16 @@ const Register = (): ReactElement => {
                   component='span'
                   style={{ backgroundColor: theme.palette.warning.dark }}
                 >
-                  <Stack direction={'row'} spacing={1}>
+                  <Stack
+                    direction={'row'}
+                    spacing={1}
+                    display={'flex'}
+                    alignItems={'center'}
+                  >
                     <Avatar>
                       <AddPhotoAlternateIcon />
                     </Avatar>
-                    <Typography
-                      variant='subtitle2'
-                      style={{
-                        marginTop: '0.7rem',
-                        color: 'white',
-                      }}
-                    >
+                    <Typography variant='subtitle2' color={'white'}>
                       Set Profile Picture
                     </Typography>
                   </Stack>
@@ -251,12 +244,10 @@ const Register = (): ReactElement => {
               {Formik.errors.file && Formik.touched.file ? (
                 <Typography
                   variant='subtitle2'
-                  style={{
-                    color: 'white',
-                    backgroundColor: 'red',
-                    padding: '0.2rem',
-                    marginTop: '0.4rem',
-                  }}
+                  color={'white'}
+                  bgcolor={'red'}
+                  p={1}
+                  mt={1}
                 >
                   {Formik.errors.file}
                 </Typography>
@@ -264,7 +255,7 @@ const Register = (): ReactElement => {
               {Formik.values.file && (
                 <p>Selected File: {Formik.values.file.name}</p>
               )}
-            </div>
+            </Box>
             <Button
               variant='contained'
               style={{ backgroundColor: theme.palette.warning.dark }}
@@ -273,14 +264,14 @@ const Register = (): ReactElement => {
               Register
             </Button>
           </Stack>
-          <div style={{ textAlign: 'center', marginTop: '0.7rem' }}>
+          <Box textAlign={'center'} mt={1}>
             <Typography variant='subtitle2'>
               Already have an account?&nbsp;
               <Link to={'/login'}>
                 <u style={{ color: 'black' }}>Login!</u>
               </Link>
             </Typography>
-          </div>
+          </Box>
         </Box>
       </Box>
       {/* <ToastContainer /> */}

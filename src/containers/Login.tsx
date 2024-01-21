@@ -45,29 +45,23 @@ const Login = () => {
     <>
       <Title />
       <Box
+        display={'grid'}
+        height={'90vh'}
         style={{
-          display: 'grid',
           placeItems: 'center',
-          height: '90vh',
         }}
       >
-        <Box
-          style={{
-            borderRadius: '2%',
-            padding: '1.4%',
-            width: '25rem',
-            backgroundColor: '#ff9800',
-          }}
-        >
-          <div style={{ textAlign: 'center' }}>
+        <Box bgcolor={'#ff9800'} width={'25rem'} p={2} borderRadius={'2%'}>
+          <Box textAlign={'center'}>
             <Typography variant='h5' gutterBottom>
               <b>Already have an account, login!</b>
             </Typography>
-          </div>
+          </Box>
           <Stack
             spacing={2}
             direction='column'
-            style={{ display: 'flex', width: '400px' }}
+            display={'flex'}
+            width={'400px'}
             component='form'
             onSubmit={Formik.handleSubmit}
           >
@@ -129,14 +123,14 @@ const Login = () => {
               Login
             </Button>
           </Stack>
-          <div style={{ textAlign: 'center', marginTop: '0.7rem' }}>
+          <Box textAlign={'center'} mt={1}>
             <Typography variant='subtitle2'>
               New here?&nbsp;
               <Link to={'/register'}>
                 <u style={{ color: 'black' }}>Register!</u>
               </Link>
             </Typography>
-          </div>
+          </Box>
         </Box>
       </Box>
     </>
