@@ -1,5 +1,4 @@
 import LeftNavbar from './LeftNavbar';
-import Inboxes from './Inboxes';
 import Search from './Search';
 
 const Left = () => {
@@ -7,7 +6,6 @@ const Left = () => {
     <div>
       <LeftNavbar />
       <Search />
-      <Inboxes />
     </div>
   );
 };

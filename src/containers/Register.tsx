@@ -18,7 +18,15 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import {
+  DocumentData,
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { useFormik } from 'formik';
 import { ReactElement, useState } from 'react';
@@ -46,9 +54,10 @@ const initialValues: valuesTypes = {
 
 const SlideTransition = (props: SlideProps) => {
   return <Slide {...props} direction='up' />;
-}
+};
 
 const Register = (): ReactElement => {
+  const [user, setUser] = useState<DocumentData | null>();
   const [open, setOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [passwordField, setPasswordField] = useState<string>('password');
@@ -69,6 +78,47 @@ const Register = (): ReactElement => {
     setErrorMessage('');
   };
 
+  const handleSubmit = async (values: valuesTypes) => {
+    console.log('hello');
+
+    try {
+      const res: UserCredential = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+
+      const storageRef = ref(storage, values.username);
+      const uploadTask = uploadBytesResumable(storageRef, values.file);
+
+      uploadTask.on(
+        (error) => {
+          setOpen(true);
+          setErrorMessage(error.code);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            await updateProfile(res.user, {
+              displayName: values.username,
+              photoURL: downloadURL,
+            });
+            await setDoc(doc(db, 'users', res.user.uid), {
+              uid: res.user.uid,
+              username: values.username,
+              email: values.email,
+              photoURL: downloadURL,
+            });
+            await setDoc(doc(db, 'userChats', res.user.uid), {});
+            navigate('/');
+          });
+        }
+      );
+    } catch (error) {
+      setOpen(true);
+      setErrorMessage(error.code);
+    }
+  };
+
   const Formik = useFormik({
     initialValues,
     validationSchema: registerSchema,
@@ -76,39 +126,16 @@ const Register = (): ReactElement => {
     validateOnBlur: true,
     onSubmit: async (values, action) => {
       try {
-        const res: UserCredential = await createUserWithEmailAndPassword(
-          auth,
-          values.email,
-          values.password
-        );
-
-        const storageRef = ref(storage, values.username);
-        const uploadTask = uploadBytesResumable(storageRef, values.file);
-
-        uploadTask.on(
-          (error) => {
-            setOpen(true);
-            setErrorMessage(error.code);
-          },
-          () => {
-            getDownloadURL(uploadTask.snapshot.ref).then(
-              async (downloadURL) => {
-                await updateProfile(res.user, {
-                  displayName: values.username,
-                  photoURL: downloadURL,
-                });
-                await setDoc(doc(db, 'users', res.user.uid), {
-                  uid: res.user.uid,
-                  username: values.username,
-                  email: values.email,
-                  photoURL: downloadURL,
-                });
-                await setDoc(doc(db, 'userChats', res.user.uid), {});
-                navigate('/');
-              }
-            );
+        const usersRef = collection(db, 'users');
+        const q = query(usersRef, where('username', '==', values.username));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+          if (doc.exists()) {
+            setUser(doc.data());
+            throw { code: 'username unavailable' };
           }
-        );
+        });
+        if (!user) handleSubmit(values);
       } catch (error) {
         setOpen(true);
         setErrorMessage(error.code);
@@ -125,8 +152,6 @@ const Register = (): ReactElement => {
       },
     },
   });
-
-  //TODO: perform username availability check
 
   return (
     <>

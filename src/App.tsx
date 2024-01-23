@@ -1,33 +1,11 @@
-import { ReactNode, useContext } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from './containers/Home';
 import Login from './containers/Login';
 import Register from './containers/Register';
-import { AuthContext } from './context/authContext';
-
-type ContextProps = {
-  children: ReactNode;
-};
+import { ProtectedRoute } from './routes/ProtectedRoute';
+import { PublicRoute } from './routes/PublicRoute';
 
 function App() {
-  const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
-
-  const ProtectedRoute = ({ children }: ContextProps) => {
-    if (!currentUser) {
-      return <Navigate to='/register' />;
-    }
-
-    return children;
-  };
-
-  const PublicRoute = ({ children }: ContextProps) => {
-    if (currentUser) {
-      return <Navigate to='/' />;
-    }
-
-    return children;
-  };
   return (
     <>
       <Routes>

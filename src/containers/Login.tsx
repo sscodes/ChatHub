@@ -11,7 +11,7 @@ import {
   Typography,
   createTheme,
 } from '@mui/material';
-import { User, signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';

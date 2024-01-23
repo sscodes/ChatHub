@@ -3,9 +3,10 @@ import { Avatar, Box, Grid, Typography } from '@mui/material';
 interface InboxType {
   image: string;
   username: string;
+  chat?: string;
 }
 
-const Inbox = ({ image, username }: InboxType) => {
+const Inbox = ({ image, username, chat='' }: InboxType) => {
   return (
     <Box className='inbox' borderBottom={1.4} borderColor={'orange'} py={2}>
       <Box display={'flex'} pl={1}>
@@ -19,9 +20,7 @@ const Inbox = ({ image, username }: InboxType) => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant='subtitle2'>
-              {username}
-            </Typography>
+            <Typography variant='subtitle2'>{chat}</Typography>
           </Grid>
         </Grid>
       </Box>
