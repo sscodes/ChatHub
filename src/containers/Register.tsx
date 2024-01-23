@@ -57,7 +57,6 @@ const SlideTransition = (props: SlideProps) => {
 };
 
 const Register = (): ReactElement => {
-  const [user, setUser] = useState<DocumentData | null>();
   const [open, setOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [passwordField, setPasswordField] = useState<string>('password');
@@ -129,13 +128,10 @@ const Register = (): ReactElement => {
         const usersRef = collection(db, 'users');
         const q = query(usersRef, where('username', '==', values.username));
         const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-          if (doc.exists()) {
-            setUser(doc.data());
-            throw { code: 'username unavailable' };
-          }
-        });
-        if (!user) handleSubmit(values);
+        if(querySnapshot._snapshot.docChanges.length>0){
+          throw { code: 'username unavailable' };
+        }
+        else  handleSubmit(Formik.values);
       } catch (error) {
         setOpen(true);
         setErrorMessage(error.code);
