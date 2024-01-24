@@ -88,7 +88,7 @@ const Search = () => {
         onKeyDown={handleKey}
       />
       {user ? (
-        <SearchedUser image={user.photoURL} username={user.username} />
+        <SearchedUser image={user.photoURL} username={user.username} user={user} />
       ) : (
         <Inboxes />
       )}
