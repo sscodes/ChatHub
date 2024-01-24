@@ -95,21 +95,20 @@ const Register = (): ReactElement => {
           setOpen(true);
           setErrorMessage(error.code);
         },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateProfile(res.user, {
-              displayName: values.username,
-              photoURL: downloadURL,
-            });
-            await setDoc(doc(db, 'users', res.user.uid), {
-              uid: res.user.uid,
-              username: values.username,
-              email: values.email,
-              photoURL: downloadURL,
-            });
-            await setDoc(doc(db, 'userChats', res.user.uid), {});
-            navigate('/');
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          await updateProfile(res.user, {
+            displayName: values.username,
+            photoURL: downloadURL,
           });
+          await setDoc(doc(db, 'users', res.user.uid), {
+            uid: res.user.uid,
+            username: values.username,
+            email: values.email,
+            photoURL: downloadURL,
+          });
+          await setDoc(doc(db, 'userChats', res.user.uid), {});
+          navigate('/');
         }
       );
     } catch (error) {
@@ -128,10 +127,9 @@ const Register = (): ReactElement => {
         const usersRef = collection(db, 'users');
         const q = query(usersRef, where('username', '==', values.username));
         const querySnapshot = await getDocs(q);
-        if(querySnapshot._snapshot.docChanges.length>0){
+        if (querySnapshot._snapshot.docChanges.length > 0) {
           throw { code: 'username unavailable' };
-        }
-        else  handleSubmit(Formik.values);
+        } else handleSubmit(Formik.values);
       } catch (error) {
         setOpen(true);
         setErrorMessage(error.code);

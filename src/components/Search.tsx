@@ -72,6 +72,7 @@ const Search = () => {
   return (
     <>
       <TextField
+        value={username}
         label={'Find an user...'}
         variant={'filled'}
         color={'warning'}
@@ -88,7 +89,13 @@ const Search = () => {
         onKeyDown={handleKey}
       />
       {user ? (
-        <SearchedUser image={user.photoURL} username={user.username} user={user} />
+        <SearchedUser
+          image={user.photoURL}
+          username={user.username}
+          user={user}
+          setUsername={setUsername}
+          setUser={setUser}
+        />
       ) : (
         <Inboxes />
       )}
