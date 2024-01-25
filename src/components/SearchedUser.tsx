@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import { User } from 'firebase/auth';
 import {
   DocumentData,
@@ -33,9 +32,13 @@ const SearchedUser = ({
   setUser,
 }: InboxType) => {
   const { currentUser }: userType = useContext(AuthContext);
+  const { dispatch } = useContext(ChatContext);
 
   const handleSelect = async () => {
-    const combinedId: string = currentUser?.uid + user.uid;
+    const combinedId: string =
+      currentUser?.uid || '' > user.uid
+        ? currentUser?.uid + user.uid
+        : user.uid + currentUser?.uid;
     const res: DocumentSnapshot<DocumentData, DocumentData> = await getDoc(
       doc(db, 'chats', combinedId)
     );
@@ -62,6 +65,14 @@ const SearchedUser = ({
         });
         setUsername('');
         setUser(null);
+        dispatch({
+          type: 'CHANGE_USER',
+          payload: {
+            uid: user.uid,
+            displayName: user.username,
+            photoURL: user.photoURL,
+          },
+        });
       }
     } catch (error) {
       console.log(error);
@@ -69,9 +80,7 @@ const SearchedUser = ({
   };
 
   return (
-    <Box onClick={handleSelect}>
-      <Inbox image={image} username={username} />
-    </Box>
+    <Inbox image={image} username={username} onClick={() => handleSelect()} />
   );
 };
 

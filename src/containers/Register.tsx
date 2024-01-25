@@ -19,13 +19,12 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import {
-  DocumentData,
   collection,
   doc,
   getDocs,
   query,
   setDoc,
-  where,
+  where
 } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { useFormik } from 'formik';
@@ -78,8 +77,6 @@ const Register = (): ReactElement => {
   };
 
   const handleSubmit = async (values: valuesTypes) => {
-    console.log('hello');
-
     try {
       const res: UserCredential = await createUserWithEmailAndPassword(
         auth,

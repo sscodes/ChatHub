@@ -9,7 +9,6 @@ type userType = {
 };
 const LeftNavbar = () => {
   const { currentUser }: userType = useContext(AuthContext);
-  console.log(currentUser);
 
   return (
     <Grid py={2} container>

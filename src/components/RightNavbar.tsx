@@ -1,15 +1,21 @@
 import { Avatar, Button, Grid, Typography } from '@mui/material';
 import { signOut } from 'firebase/auth';
 import { auth } from '../config/firebase';
+import { useContext } from 'react';
+import { ChatContext } from '../context/chatContext';
 
 const RightNavbar = () => {
+  const { data } = useContext(ChatContext);
+
   return (
     <Grid py={2} borderBottom={2} borderColor={'orange'} container>
       <Grid item xs={10} display={'flex'} pl={2}>
-        <Avatar
-          src='../../Sanket-Photo.jpeg'
-          style={{ backgroundColor: 'orange', width: 37, height: 37 }}
-        />
+        {data?.user?.photoURL && (
+          <Avatar
+            src={data.user.photoURL}
+            style={{ backgroundColor: 'orange', width: 37, height: 37 }}
+          />
+        )}
         <Typography
           display={'flex'}
           alignItems={'center'}
@@ -17,7 +23,7 @@ const RightNavbar = () => {
           ml={1}
           variant='h6'
         >
-          username
+          {data?.user?.displayName}
         </Typography>
       </Grid>
       <Grid

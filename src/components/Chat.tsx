@@ -1,8 +1,12 @@
-import { Box, Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import Message from './Message';
+import { useContext } from 'react';
+import { ChatContext } from '../context/chatContext';
 
 const Chat = () => {
-  return (
+  const { data } = useContext(ChatContext);
+
+  return data.user.displayName ? (
     <Box height={'25rem'} style={{ overflowY: 'auto' }}>
       <Grid container>
         <Grid item xs={12} display={'flex'} justifyItems={'start'} py={1}>
@@ -18,6 +22,21 @@ const Chat = () => {
           </Grid>
         </Grid>
       </Grid>
+    </Box>
+  ) : (
+    <Box
+      display={'flex'}
+      justifyContent={'center'}
+      marginTop={'25vh'}
+    >
+      <Box textAlign={'center'}>
+        <Typography variant='h2' color={'orange'}>
+          Welcome!
+        </Typography>
+        <Typography variant='h4' color={'orange'}>
+          Click on a chat to start messaging.
+        </Typography>
+      </Box>
     </Box>
   );
 };

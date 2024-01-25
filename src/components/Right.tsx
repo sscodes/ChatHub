@@ -1,14 +1,17 @@
 import Chat from './Chat';
 import ChatInput from './ChatInput';
 import RightNavbar from './RightNavbar';
+import { useContext } from 'react';
+import { ChatContext } from '../context/chatContext';
 
 const Right = () => {
+  const { data } = useContext(ChatContext);
   return (
-    <div>
+    <>
       <RightNavbar />
       <Chat />
-      <ChatInput />
-    </div>
+      {data?.user?.displayName && <ChatInput />}
+    </>
   );
 };
 
