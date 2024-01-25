@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import Inbox from './Inbox';
 import { useContext, useEffect, useState } from 'react';
 import { FieldValue, doc, onSnapshot } from 'firebase/firestore';
@@ -44,22 +44,28 @@ const Inboxes = () => {
     currentUser?.uid && fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser?.uid]);
-  
+
   const handleSelect = (payload: userInfoType) => {
     dispatch({ type: 'CHANGE_USER', payload: payload });
   };
 
   return (
     <Box style={{ height: '24.7rem', overflowY: 'auto' }}>
-      {inboxesList.map((user: inboxType) => (
-        <Inbox
-          onClick={() => handleSelect(user.userInfo)}
-          image={user.userInfo.photoURL}
-          username={user.userInfo.displayName}
-          key={user.userInfo.uid}
-          chat={user.lastMessage}
-        />
-      ))}
+      {inboxesList.length ? (
+        inboxesList.map((user: inboxType) => (
+          <Inbox
+            onClick={() => handleSelect(user.userInfo)}
+            image={user.userInfo.photoURL}
+            username={user.userInfo.displayName}
+            key={user.userInfo.uid}
+            chat={user.lastMessage}
+          />
+        ))
+      ) : (
+        <Box display={'flex'} justifyContent={'center'} mt={2}>
+          <CircularProgress color='warning' />
+        </Box>
+      )}
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import { Avatar, Grid, Typography } from '@mui/material';
+import { Avatar, CircularProgress, Grid, Typography } from '@mui/material';
 import { User } from 'firebase/auth';
 import { useContext } from 'react';
 import { AuthContext } from '../context/authContext';
@@ -15,17 +15,27 @@ const LeftNavbar = () => {
       <Grid item xs={4} mt={0.4}>
         <Title />
       </Grid>
+
       <Grid item xs={8} display={'flex'} justifyContent={'end'} pr={2}>
-        <Avatar src={currentUser?.photoURL} style={{ width: 37, height: 37 }} />
-        <Typography
-          display={'flex'}
-          alignItems={'center'}
-          color={'warning.light'}
-          ml={1}
-          variant='h6'
-        >
-          {currentUser?.displayName}
-        </Typography>
+        {currentUser?.photoURL ? (
+          <>
+            <Avatar
+              src={currentUser?.photoURL}
+              style={{ width: 37, height: 37 }}
+            />
+            <Typography
+              display={'flex'}
+              alignItems={'center'}
+              color={'warning.light'}
+              ml={1}
+              variant='h6'
+            >
+              {currentUser?.displayName}
+            </Typography>
+          </>
+        ) : (
+          <CircularProgress color='warning' />
+        )}
       </Grid>
     </Grid>
   );

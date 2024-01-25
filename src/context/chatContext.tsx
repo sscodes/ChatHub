@@ -11,6 +11,11 @@ type userInfoType = {
   uid: string;
 };
 
+interface stateType {
+  chatId: string;
+  user: userInfoType;
+}
+
 export const ChatContext = createContext();
 
 export const ChatContextProvider = ({ children }: ContextProps) => {
@@ -21,10 +26,7 @@ export const ChatContextProvider = ({ children }: ContextProps) => {
   };
 
   const chatReducer = (
-    state: {
-      chatId: string;
-      user: userInfoType;
-    },
+    state: stateType,
     action: { type: string; payload: userInfoType }
   ) => {
     switch (action.type) {
@@ -45,7 +47,7 @@ export const ChatContextProvider = ({ children }: ContextProps) => {
   const [state, dispatch] = useReducer(chatReducer, INITIAL_STATE);
 
   return (
-    <ChatContext.Provider value={{ data: state, dispatch }}>
+    <ChatContext.Provider value={{ data: state as stateType, dispatch }}>
       {children}
     </ChatContext.Provider>
   );

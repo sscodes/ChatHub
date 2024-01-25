@@ -3,8 +3,19 @@ import Message from './Message';
 import { useContext } from 'react';
 import { ChatContext } from '../context/chatContext';
 
+type userInfoType = {
+  displayName: string;
+  photoURL: string;
+  uid: string;
+};
+
+interface stateType {
+  chatId: string;
+  user: userInfoType;
+}
+
 const Chat = () => {
-  const { data } = useContext(ChatContext);
+  const { data }: { data: stateType } = useContext(ChatContext);
 
   return data.user.displayName ? (
     <Box height={'25rem'} style={{ overflowY: 'auto' }}>
@@ -24,11 +35,7 @@ const Chat = () => {
       </Grid>
     </Box>
   ) : (
-    <Box
-      display={'flex'}
-      justifyContent={'center'}
-      marginTop={'25vh'}
-    >
+    <Box display={'flex'} justifyContent={'center'} marginTop={'25vh'}>
       <Box textAlign={'center'}>
         <Typography variant='h2' color={'orange'}>
           Welcome!
