@@ -6,6 +6,7 @@ import {
   Avatar,
   Box,
   Button,
+  CircularProgress,
   Slide,
   SlideProps,
   Snackbar,
@@ -24,7 +25,7 @@ import {
   getDocs,
   query,
   setDoc,
-  where
+  where,
 } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { useFormik } from 'formik';
@@ -56,6 +57,7 @@ const SlideTransition = (props: SlideProps) => {
 };
 
 const Register = (): ReactElement => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [passwordField, setPasswordField] = useState<string>('password');
@@ -77,6 +79,7 @@ const Register = (): ReactElement => {
   };
 
   const handleSubmit = async (values: valuesTypes) => {
+    setLoading(true);
     try {
       const res: UserCredential = await createUserWithEmailAndPassword(
         auth,
@@ -89,6 +92,7 @@ const Register = (): ReactElement => {
 
       uploadTask.on(
         (error) => {
+          setLoading(false);
           setOpen(true);
           setErrorMessage(error.code);
         },
@@ -109,6 +113,7 @@ const Register = (): ReactElement => {
         }
       );
     } catch (error) {
+      setLoading(false);
       setOpen(true);
       setErrorMessage(error.code);
     }
@@ -144,7 +149,13 @@ const Register = (): ReactElement => {
     },
   });
 
-  return (
+  return loading ? (
+    <>
+      <Box  position={'absolute'} top={'50%'} left={'50%'}>
+        <CircularProgress color='warning' />
+      </Box>
+    </>
+  ) : (
     <>
       <Title />
       <Box

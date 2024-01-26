@@ -33,7 +33,6 @@ const Inboxes = () => {
       const unsub = onSnapshot(
         doc(db, 'userChats', currentUser?.uid || ''),
         (doc) => {
-          console.log(currentUser?.uid);
           if (doc.exists())
             setInboxesList([...inboxesList, Object.entries(doc.data())[0][1]]);
           return () => unsub();
