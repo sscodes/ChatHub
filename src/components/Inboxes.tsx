@@ -1,7 +1,7 @@
 import { Box, CircularProgress } from '@mui/material';
 import Inbox from './Inbox';
 import { useContext, useEffect, useState } from 'react';
-import { FieldValue, doc, onSnapshot } from 'firebase/firestore';
+import { Timestamp, doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { AuthContext } from '../context/authContext';
 import { User } from 'firebase/auth';
@@ -18,7 +18,7 @@ type userType = {
 };
 
 type inboxType = {
-  date: FieldValue;
+  date: Timestamp;
   userInfo: userInfoType;
   lastMessage?: string;
 };
@@ -50,16 +50,22 @@ const Inboxes = () => {
 
   return (
     <Box style={{ height: '24.7rem', overflowY: 'auto' }}>
-      {inboxesList.length ? (
-        inboxesList.map((user: inboxType) => (
-          <Inbox
-            onClick={() => handleSelect(user.userInfo)}
-            image={user.userInfo.photoURL}
-            username={user.userInfo.displayName}
-            key={user.userInfo.uid}
-            chat={user.lastMessage}
-          />
-        ))
+      {inboxesList?.length ? (
+        inboxesList
+          // .sort(
+          //   (a: inboxType, b: inboxType) =>
+          //     b.date - a.date
+          // )
+          .map((user: inboxType) => (
+            <Inbox
+              onClick={() => handleSelect(user.userInfo)}
+              image={user.userInfo.photoURL}
+              username={user.userInfo.displayName}
+              key={user.userInfo.uid}
+              chat={user.lastMessage}
+              date={user.date}
+            />
+          ))
       ) : (
         <Box display={'flex'} justifyContent={'center'} mt={2}>
           <CircularProgress color='warning' />

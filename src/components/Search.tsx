@@ -76,6 +76,7 @@ const Search = () => {
         label={'Find an user...'}
         variant={'filled'}
         color={'warning'}
+        type={"search"}
         style={{
           backgroundColor: '#dfab62',
           display: 'flex',

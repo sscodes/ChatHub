@@ -11,7 +11,9 @@ import {
 import { Dispatch, SetStateAction, useContext } from 'react';
 import { db } from '../config/firebase';
 import { AuthContext } from '../context/authContext';
+import { ChatContext } from '../context/chatContext';
 import Inbox from './Inbox';
+import { Box } from '@mui/material';
 
 interface InboxType {
   image: string;
@@ -36,7 +38,7 @@ const SearchedUser = ({
 
   const handleSelect = async () => {
     const combinedId: string =
-      currentUser?.uid || '' > user.uid
+      currentUser?.uid+'' > user.uid
         ? currentUser?.uid + user.uid
         : user.uid + currentUser?.uid;
     const res: DocumentSnapshot<DocumentData, DocumentData> = await getDoc(
@@ -80,7 +82,9 @@ const SearchedUser = ({
   };
 
   return (
-    <Inbox image={image} username={username} onClick={() => handleSelect()} />
+    <Box style={{ height: '24.7rem', overflowY: 'auto' }}>
+      <Inbox image={image} username={username} onClick={() => handleSelect()} />
+    </Box>
   );
 };
 

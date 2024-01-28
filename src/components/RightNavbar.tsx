@@ -11,12 +11,11 @@ import {
   Slide,
   Typography,
 } from '@mui/material';
-import { signOut } from 'firebase/auth';
-import { auth } from '../config/firebase';
-import { ReactElement, Ref, forwardRef, useContext, useState } from 'react';
-import { ChatContext } from '../context/chatContext';
 import { TransitionProps } from '@mui/material/transitions';
-import { BorderColor } from '@mui/icons-material';
+import { signOut } from 'firebase/auth';
+import { ReactElement, Ref, forwardRef, useContext, useState } from 'react';
+import { auth } from '../config/firebase';
+import { ChatContext } from '../context/chatContext';
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {

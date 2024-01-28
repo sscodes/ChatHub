@@ -1,4 +1,5 @@
 import { Avatar, Box, Grid, Typography } from '@mui/material';
+import { Timestamp } from 'firebase/firestore';
 import { MouseEventHandler } from 'react';
 
 interface InboxType {
@@ -6,20 +7,26 @@ interface InboxType {
   username: string;
   chat?: string;
   onClick: MouseEventHandler<HTMLDivElement> | undefined;
+  date?: Timestamp;
 }
 
-const Inbox = ({
-  image,
-  username,
-  chat = '',
-  onClick,
-}: InboxType) => {
+const Inbox = ({ image, username, chat = '', onClick, date }: InboxType) => {
+  const options = {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  };
+
   return (
     <Box
       className='inbox'
       borderBottom={1.4}
       borderColor={'orange'}
-      py={2}
+      pt={2}
+      pb={1}
       onClick={onClick}
     >
       <Box display={'flex'} pl={1}>
@@ -36,6 +43,11 @@ const Inbox = ({
             <Typography variant='subtitle2'>{chat}</Typography>
           </Grid>
         </Grid>
+      </Box>
+      <Box display={'flex'} justifyContent={'center'}>
+        <Typography variant='subtitle2'>
+          {date?.toDate().toLocaleDateString(options)}
+        </Typography>
       </Box>
     </Box>
   );
