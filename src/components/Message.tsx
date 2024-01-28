@@ -1,4 +1,11 @@
-import { Avatar, Box, Dialog, Grid, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  CircularProgress,
+  Dialog,
+  Grid,
+  Typography,
+} from '@mui/material';
 import { Timestamp } from 'firebase/firestore';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/authContext';
@@ -32,7 +39,8 @@ interface stateType {
 }
 
 const Message = ({ message, type }: messagePropType) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const [imageLoading, setImageLoading] = useState<boolean>(true);
 
   const { currentUser }: userType = useContext(AuthContext);
   const { data }: { data: stateType } = useContext(ChatContext);
@@ -89,6 +97,7 @@ const Message = ({ message, type }: messagePropType) => {
           <Box>
             {message.image && (
               <>
+                {imageLoading && <CircularProgress color='warning' />}
                 <img
                   src={message?.image}
                   alt=''
@@ -99,6 +108,7 @@ const Message = ({ message, type }: messagePropType) => {
                     cursor: 'pointer',
                   }}
                   onClick={handleClickOpen}
+                  onLoad={() => setImageLoading(false)}
                 />
               </>
             )}

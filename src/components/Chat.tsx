@@ -50,7 +50,12 @@ const Chat = () => {
 
   return data.user.displayName ? (
     <>
-      <Box height={'25rem'} style={{ overflowY: 'auto' }}>
+      <Box
+        height={'25rem'}
+        display={'flex'}
+        flexDirection={'column-reverse'}
+        style={{ overflowY: 'auto' }}
+      >
         <Grid container>
           {messages?.map((message) => (
             <Grid

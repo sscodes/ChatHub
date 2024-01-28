@@ -17,11 +17,14 @@ type userType = {
   currentUser: User | null;
 };
 
-type inboxType = {
-  date: Timestamp;
-  userInfo: userInfoType;
-  lastMessage?: string;
-};
+type inboxType = [
+  string,
+  {
+    date: Timestamp;
+    userInfo: userInfoType;
+    lastMessage?: string;
+  }
+];
 
 const Inboxes = () => {
   const [inboxesList, setInboxesList] = useState<inboxType[]>([]);
@@ -33,8 +36,10 @@ const Inboxes = () => {
       const unsub = onSnapshot(
         doc(db, 'userChats', currentUser?.uid || ''),
         (doc) => {
-          if (doc.exists())
-            setInboxesList([...inboxesList, Object.entries(doc.data())[0][1]]);
+          if (doc.exists()) {
+            console.log(Object.entries(doc.data()));
+            setInboxesList(Object.entries(doc.data()));
+          }
           return () => unsub();
         }
       );
@@ -52,18 +57,18 @@ const Inboxes = () => {
     <Box style={{ height: '24.7rem', overflowY: 'auto' }}>
       {inboxesList?.length ? (
         inboxesList
-          // .sort(
-          //   (a: inboxType, b: inboxType) =>
-          //     b.date - a.date
-          // )
+          .sort(
+            (a: inboxType, b: inboxType) =>
+              b[1].date?.toDate().getTime() - a[1].date?.toDate().getTime()
+          )
           .map((user: inboxType) => (
             <Inbox
-              onClick={() => handleSelect(user.userInfo)}
-              image={user.userInfo.photoURL}
-              username={user.userInfo.displayName}
-              key={user.userInfo.uid}
-              chat={user.lastMessage}
-              date={user.date}
+              onClick={() => handleSelect(user[1].userInfo)}
+              image={user[1].userInfo.photoURL}
+              username={user[1].userInfo.displayName}
+              key={user[1].userInfo.uid}
+              chat={user[1].lastMessage}
+              date={user[1].date}
             />
           ))
       ) : (
