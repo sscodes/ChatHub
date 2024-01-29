@@ -36,13 +36,13 @@ const SlideTransition = (props: SlideProps) => {
 
 const Login = () => {
   const [open, setOpen] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string | unknown>('');
   const [passwordField, setPasswordField] = useState<string>('password');
 
   const navigate = useNavigate();
 
   const handleClose = (
-    event: React.SyntheticEvent | Event,
+    _event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === 'clickaway') {
@@ -184,7 +184,7 @@ const Login = () => {
           variant='filled'
           style={{ width: '100%' }}
         >
-          {errorMessage}
+          {errorMessage + ''}
         </Alert>
       </Snackbar>
     </>

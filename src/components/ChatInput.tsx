@@ -63,7 +63,7 @@ const ChatInput = () => {
   }, [imageMessage, waitMessage]);
 
   const handleErrorClose = (
-    event: React.SyntheticEvent | Event,
+    _event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === 'clickaway') {
@@ -74,7 +74,7 @@ const ChatInput = () => {
   };
 
   const handleImageAlertClose = (
-    event: React.SyntheticEvent | Event,
+    _event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === 'clickaway') {

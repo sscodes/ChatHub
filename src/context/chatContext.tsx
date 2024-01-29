@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useReducer } from 'react';
-import { AuthContext } from './authContext';
+import { AuthContext, AuthContextType } from './authContext';
 
 type ContextProps = {
   children: ReactNode;
@@ -9,20 +9,22 @@ type userInfoType = {
   displayName: string;
   photoURL: string;
   uid: string;
-};
+} | null;
 
 interface stateType {
   chatId: string;
   user: userInfoType;
 }
 
-export const ChatContext = createContext();
+export const ChatContext = createContext<stateType | null>(null);
 
 export const ChatContextProvider = ({ children }: ContextProps) => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser }: AuthContextType | null = useContext(AuthContext);
+  console.log(currentUser);
+
   const INITIAL_STATE = {
     chatId: '',
-    user: {},
+    user: null,
   };
 
   const chatReducer = (
@@ -31,13 +33,12 @@ export const ChatContextProvider = ({ children }: ContextProps) => {
   ) => {
     switch (action.type) {
       case 'CHANGE_USER':
-        
         return {
           user: action.payload,
           chatId:
-            currentUser.uid+'' > action.payload.uid
-              ? currentUser.uid + action.payload.uid
-              : action.payload.uid + currentUser.uid,
+            currentUser?.uid + '' > action?.payload?.uid + ''
+              ? currentUser?.uid + '' + action?.payload?.uid + ''
+              : action?.payload?.uid + '' + currentUser?.uid + '',
         };
 
       default:
@@ -48,7 +49,7 @@ export const ChatContextProvider = ({ children }: ContextProps) => {
   const [state, dispatch] = useReducer(chatReducer, INITIAL_STATE);
 
   return (
-    <ChatContext.Provider value={{ data: state as stateType, dispatch }}>
+    <ChatContext.Provider value={{ data: state, dispatch }}>
       {children}
     </ChatContext.Provider>
   );

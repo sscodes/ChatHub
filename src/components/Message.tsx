@@ -53,15 +53,6 @@ const Message = ({ message, type }: messagePropType) => {
     setOpen(false);
   };
 
-  const options = {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: true,
-  };
-
   return (
     <>
       <Grid container>
@@ -131,7 +122,7 @@ const Message = ({ message, type }: messagePropType) => {
       </Grid>
       <Box textAlign={'center'}>
         <Typography variant='subtitle2' color={'orange'}>
-          {`${message.date.toDate().toLocaleDateString(undefined, options)}`}
+          {`${message.date.toDate().toLocaleDateString('en-IN')}`}
         </Typography>
       </Box>
       <Dialog onClose={handleClose} open={open} fullWidth={true}>

@@ -29,7 +29,7 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
 
   const handleSuccessClose = (
-    event: SyntheticEvent | Event,
+    _event: SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === 'clickaway') {
@@ -39,7 +39,7 @@ const ForgotPassword = () => {
     setSuccessOpen(false);
   };
 
-  const handleErrorClose = (event: SyntheticEvent | Event, reason?: string) => {
+  const handleErrorClose = (_event: SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }

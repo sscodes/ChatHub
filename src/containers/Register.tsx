@@ -14,6 +14,7 @@ import {
   Typography,
   createTheme,
 } from '@mui/material';
+import { FirebaseError } from 'firebase/app';
 import {
   UserCredential,
   createUserWithEmailAndPassword,
@@ -67,7 +68,7 @@ const Register = (): ReactElement => {
   const navigate = useNavigate();
 
   const handleClose = (
-    event: React.SyntheticEvent | Event,
+    _event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === 'clickaway') {
@@ -88,34 +89,53 @@ const Register = (): ReactElement => {
       );
 
       const storageRef = ref(storage, values.username);
-      const uploadTask = uploadBytesResumable(storageRef, values.file);
+      if (values.file) {
+        const uploadTask = uploadBytesResumable(storageRef, values.file);
 
-      uploadTask.on(
-        (error) => {
-          setLoading(false);
-          setOpen(true);
-          setErrorMessage(error.code);
-        },
-        async () => {
-          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-          await updateProfile(res.user, {
-            displayName: values.username,
-            photoURL: downloadURL,
-          });
-          await setDoc(doc(db, 'users', res.user.uid), {
-            uid: res.user.uid,
-            username: values.username,
-            email: values.email,
-            photoURL: downloadURL,
-          });
-          await setDoc(doc(db, 'userChats', res.user.uid), {});
-          navigate('/');
-        }
-      );
-    } catch (error) {
-      setLoading(false);
+        uploadTask.on(
+          (error: unknown) => {
+            setLoading(false);
+            setOpen(true);
+
+            if (error instanceof FirebaseError) {
+              setErrorMessage(error.code);
+            } else if (
+              typeof error === 'object' &&
+              error !== null &&
+              'code' in error
+            ) {
+              // You can access 'code' property safely here
+              setErrorMessage((error as { code: string }).code);
+            } else {
+              // Handle other types of errors or unknown types
+              setErrorMessage(String(error));
+            }
+          },
+          async () => {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+            await updateProfile(res.user, {
+              displayName: values.username,
+              photoURL: downloadURL,
+            });
+            await setDoc(doc(db, 'users', res.user.uid), {
+              uid: res.user.uid,
+              username: values.username,
+              email: values.email,
+              photoURL: downloadURL,
+            });
+            await setDoc(doc(db, 'userChats', res.user.uid), {});
+            navigate('/');
+          }
+        );
+      }
+    } catch (error: unknown) {
       setOpen(true);
-      setErrorMessage(error.code);
+      setLoading(false);
+      if (error instanceof FirebaseError) {
+        setErrorMessage(error.code);
+      } else {
+        setErrorMessage(error + '');
+      }
     }
   };
 
@@ -126,12 +146,16 @@ const Register = (): ReactElement => {
     validateOnBlur: true,
     onSubmit: async (values, action) => {
       try {
-        const usersRef = collection(db, 'users');
-        const q = query(usersRef, where('username', '==', values.username));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot._snapshot.docChanges.length > 0) {
-          throw { code: 'username unavailable' };
-        } else handleSubmit(Formik.values);
+        const querySnapshot = await getDocs(
+          query(
+            collection(db, 'users'),
+            where('username', '==', values.username)
+          )
+        );
+        querySnapshot.docs.forEach((doc) => {
+          if (doc.exists()) throw { code: 'username unavailable' };
+        });
+        handleSubmit(Formik.values);
       } catch (error) {
         setOpen(true);
         setErrorMessage(error.code);
@@ -151,7 +175,7 @@ const Register = (): ReactElement => {
 
   return loading ? (
     <>
-      <Box  position={'absolute'} top={'50%'} left={'50%'}>
+      <Box position={'absolute'} top={'50%'} left={'50%'}>
         <CircularProgress color='warning' />
       </Box>
     </>

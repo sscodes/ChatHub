@@ -18,7 +18,7 @@ import { Alert, Box, Slide, SlideProps, Snackbar } from '@mui/material';
 interface InboxType {
   image: string;
   username: string;
-  user: User;
+  user: DocumentData;
   setUsername: Dispatch<SetStateAction<string>>;
   setUser: Dispatch<SetStateAction<DocumentData | null | undefined>>;
 }
@@ -44,7 +44,7 @@ const SearchedUser = ({
   const { dispatch } = useContext(ChatContext);
 
   const handleClose = (
-    event: React.SyntheticEvent | Event,
+    _event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === 'clickaway') {

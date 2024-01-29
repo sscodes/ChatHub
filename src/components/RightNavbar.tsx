@@ -1,3 +1,4 @@
+import BlockIcon from '@mui/icons-material/Block';
 import {
   Alert,
   Avatar,
@@ -14,7 +15,6 @@ import {
   Snackbar,
   Typography,
 } from '@mui/material';
-import BlockIcon from '@mui/icons-material/Block';
 import { TransitionProps } from '@mui/material/transitions';
 import { User, signOut } from 'firebase/auth';
 import {
@@ -25,10 +25,8 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import {
-  Dispatch,
   ReactElement,
   Ref,
-  SetStateAction,
   forwardRef,
   useContext,
   useEffect,
@@ -81,16 +79,15 @@ const RightNavbar = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const res: DocumentSnapshot<DocumentData, DocumentData> = await getDoc(
-        doc(db, 'userChats', currentUser?.uid || '')
+        doc(db, 'userChats', currentUser?.uid+'')
       );
-      console.log(data);
 
-      if (res.data()[data.chatId].blocked) {
+      if (res.exists() && res?.data()[data.chatId]?.blocked) {
         setBlock(true);
       } else {
         setBlock(false);
       }
-      if (res.data()[data.chatId].blocker === currentUser?.uid) {
+      if (res.exists() && res?.data()[data.chatId]?.blocker === currentUser?.uid) {
         setBlocker(true);
       } else {
         setBlocker(false);
@@ -98,10 +95,10 @@ const RightNavbar = () => {
     };
 
     currentUser?.uid && fetchUser();
-  }, [currentUser?.uid, data.user.uid]);
+  }, [currentUser?.uid, data?.user?.uid]);
 
   const handleClose = (
-    event: React.SyntheticEvent | Event,
+    _event: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === 'clickaway') {
@@ -117,7 +114,7 @@ const RightNavbar = () => {
   };
 
   const handleLogoutClose = () => {
-    setErrorOpen(false);
+    setLogoutOpen(false);
   };
 
   const blockUnblockUser = async () => {
@@ -125,7 +122,7 @@ const RightNavbar = () => {
       const res: DocumentSnapshot<DocumentData, DocumentData> = await getDoc(
         doc(db, 'userChats', currentUser?.uid || '')
       );
-      if (res.data()[data.chatId].blocked) {
+      if (res.exists() && res.data()[data.chatId]?.blocked) {
         await updateDoc(doc(db, 'userChats', currentUser?.uid || ''), {
           [data.chatId + '.blocked']: false,
           [data.chatId + '.blocker']: '',
@@ -225,7 +222,6 @@ const RightNavbar = () => {
         open={logoutOpen}
         TransitionComponent={Transition}
         keepMounted
-        onClose={handleLogoutClose}
         aria-describedby='alert-dialog-slide-description'
       >
         <Box style={{ backgroundColor: 'orange' }}>
@@ -240,7 +236,7 @@ const RightNavbar = () => {
           </DialogContent>
           <DialogActions>
             <Button
-              onClick={handleClose}
+              onClick={handleLogoutClose}
               variant='contained'
               style={{ backgroundColor: 'black', color: 'orange' }}
             >

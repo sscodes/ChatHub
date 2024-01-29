@@ -48,7 +48,7 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
     data?.chatId && fetchData();
   }, [data?.chatId]);
 
-  return data.user.displayName ? (
+  return data?.user?.displayName ? (
     <>
       <Box
         height={'25rem'}
