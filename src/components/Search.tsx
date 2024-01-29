@@ -22,8 +22,6 @@ const Search = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [enter, setEnter] = useState<boolean>(false);
 
-  const usersRef = collection(db, 'users');
-
   useEffect(() => {
     if (username.length === 0) setUser(null);
   }, [username]);
@@ -52,10 +50,11 @@ const Search = () => {
   const handleSearch = async () => {
     setUser(null);
     setEnter(true);
-    const q = query(usersRef, where('username', '==', username));
 
     try {
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await getDocs(
+        query(collection(db, 'users'), where('username', '==', username))
+      );
       querySnapshot.forEach((doc) => {
         setUser(doc.data());
       });
@@ -76,7 +75,7 @@ const Search = () => {
         label={'Find an user...'}
         variant={'filled'}
         color={'warning'}
-        type={"search"}
+        type={'search'}
         style={{
           backgroundColor: '#dfab62',
           display: 'flex',

@@ -1,12 +1,12 @@
 import { Box, Grid, Typography } from '@mui/material';
+import { User } from 'firebase/auth';
 import { Timestamp, doc, onSnapshot } from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import { db } from '../config/firebase';
+import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
 import ChatInput from './ChatInput';
 import Message from './Message';
-import { User } from 'firebase/auth';
-import { AuthContext } from '../context/authContext';
 
 type userInfoType = {
   displayName: string;
@@ -31,7 +31,7 @@ type userType = {
   currentUser: User | null;
 };
 
-const Chat = () => {
+const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
   const [messages, setMessages] = useState<messageType[]>([]);
 
   const { currentUser }: userType = useContext(AuthContext);
@@ -86,7 +86,20 @@ const Chat = () => {
           ))}
         </Grid>
       </Box>
-      {data?.user?.displayName && <ChatInput />}
+      {data?.user?.displayName &&
+        (blockedProp ? (
+          <Box
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            bgcolor={'orange'}
+            height={55}
+          >
+            <Typography>You can't communicate with them anymore.</Typography>
+          </Box>
+        ) : (
+          <ChatInput />
+        ))}
     </>
   ) : (
     <Box display={'flex'} justifyContent={'center'} marginTop={'25vh'}>

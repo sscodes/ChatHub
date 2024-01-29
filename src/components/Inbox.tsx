@@ -11,6 +11,7 @@ interface InboxType {
 }
 
 const Inbox = ({ image, username, chat = '', onClick, date }: InboxType) => {
+
   const options = {
     day: '2-digit',
     month: '2-digit',

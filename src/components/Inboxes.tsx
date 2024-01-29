@@ -23,13 +23,15 @@ type inboxType = [
     date: Timestamp;
     userInfo: userInfoType;
     lastMessage?: string;
+    blocked?: boolean;
+    blocker?: string;
   }
 ];
 
 const Inboxes = () => {
   const [inboxesList, setInboxesList] = useState<inboxType[]>([]);
   const { currentUser }: userType = useContext(AuthContext);
-  const { dispatch } = useContext(ChatContext);
+  const { dispatch } = useContext(ChatContext);  
 
   useEffect(() => {
     const fetchData = () => {
@@ -37,7 +39,6 @@ const Inboxes = () => {
         doc(db, 'userChats', currentUser?.uid || ''),
         (doc) => {
           if (doc.exists()) {
-            console.log(Object.entries(doc.data()));
             setInboxesList(Object.entries(doc.data()));
           }
           return () => unsub();
