@@ -3,8 +3,10 @@ import {
   InputProps,
   OutlinedInputProps,
   TextField,
+  Typography,
 } from '@mui/material';
 import { ReactElement, ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface InputPropTypes {
   label: string;
@@ -20,6 +22,7 @@ interface InputPropTypes {
     | Partial<OutlinedInputProps>
     | Partial<InputProps>
     | undefined;
+  forgotPassword?: boolean;
 }
 
 const Input = ({
@@ -32,7 +35,13 @@ const Input = ({
   error = false,
   helperText = null,
   InputProps,
+  forgotPassword = false,
 }: InputPropTypes): ReactElement => {
+
+  const navigate = useNavigate();
+  const toForgotPassword = () => {
+    navigate('/forgot-password');
+  }
   return (
     <div>
       <TextField
@@ -51,6 +60,17 @@ const Input = ({
         helperText={helperText}
         InputProps={InputProps}
       />
+      {forgotPassword && (
+        <Typography
+          variant='subtitle2'
+          style={{ textDecoration: 'underline', cursor: 'pointer' }}
+          mt={1}
+          ml={1}
+          onClick={toForgotPassword}
+        >
+          Forgot Password?
+        </Typography>
+      )}
     </div>
   );
 };

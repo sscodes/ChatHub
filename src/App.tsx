@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import ForgotPassword from './containers/ForgotPassword';
 import Home from './containers/Home';
 import Login from './containers/Login';
 import Register from './containers/Register';
@@ -30,6 +31,14 @@ function App() {
           element={
             <PublicRoute>
               <Register />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path='/forgot-password'
+          element={
+            <PublicRoute>
+              <ForgotPassword />
             </PublicRoute>
           }
         />

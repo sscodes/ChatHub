@@ -120,6 +120,7 @@ const Login = () => {
               }
             />
             <Input
+              forgotPassword={true}
               label='Password'
               name='password'
               type={passwordField}
