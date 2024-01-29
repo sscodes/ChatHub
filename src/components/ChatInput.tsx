@@ -55,7 +55,9 @@ const ChatInput = () => {
   const [message, setMessage] = useState<string>('');
   const [imageMessage, setImageMessage] = useState<File | null | undefined>();
 
+  // @ts-ignore
   const { data }: { data: stateType } = useContext(ChatContext);
+  // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
 
   useEffect(() => {
@@ -121,6 +123,7 @@ const ChatInput = () => {
           });
         } catch (error) {
           setErrorOpen(true);
+          // @ts-ignore
           setErrorMessage(error.code);
           console.log(error);
         }

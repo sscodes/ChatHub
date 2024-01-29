@@ -7,6 +7,7 @@ type ContextProps = {
 };
 
 export const PublicRoute = ({ children }: ContextProps) => {
+  // @ts-ignore
   const { currentUser } = useContext(AuthContext);
   if (currentUser) {
     return <Navigate to='/' />;

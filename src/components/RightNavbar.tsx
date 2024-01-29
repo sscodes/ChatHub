@@ -72,14 +72,15 @@ const RightNavbar = () => {
   const [errorOpen, setErrorOpen] = useState<boolean>(false);
   const [logoutOpen, setLogoutOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
-
+  // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
+  // @ts-ignore
   const { data }: { data: stateType } = useContext(ChatContext);
 
   useEffect(() => {
     const fetchUser = async () => {
       const res: DocumentSnapshot<DocumentData, DocumentData> = await getDoc(
-        doc(db, 'userChats', currentUser?.uid+'')
+        doc(db, 'userChats', currentUser?.uid + '')
       );
 
       if (res.exists() && res?.data()[data.chatId]?.blocked) {
@@ -87,7 +88,10 @@ const RightNavbar = () => {
       } else {
         setBlock(false);
       }
-      if (res.exists() && res?.data()[data.chatId]?.blocker === currentUser?.uid) {
+      if (
+        res.exists() &&
+        res?.data()[data.chatId]?.blocker === currentUser?.uid
+      ) {
         setBlocker(true);
       } else {
         setBlocker(false);
@@ -147,6 +151,7 @@ const RightNavbar = () => {
       }
     } catch (error) {
       setErrorOpen(true);
+      // @ts-ignore
       setErrorMessage(error.code);
     }
   };

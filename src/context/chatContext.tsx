@@ -19,6 +19,7 @@ interface stateType {
 export const ChatContext = createContext<stateType | null>(null);
 
 export const ChatContextProvider = ({ children }: ContextProps) => {
+  // @ts-ignore
   const { currentUser }: AuthContextType | null = useContext(AuthContext);
   console.log(currentUser);
 
@@ -49,6 +50,7 @@ export const ChatContextProvider = ({ children }: ContextProps) => {
   const [state, dispatch] = useReducer(chatReducer, INITIAL_STATE);
 
   return (
+    // @ts-ignore
     <ChatContext.Provider value={{ data: state, dispatch }}>
       {children}
     </ChatContext.Provider>

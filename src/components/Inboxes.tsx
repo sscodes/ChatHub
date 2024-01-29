@@ -30,7 +30,9 @@ type inboxType = [
 
 const Inboxes = () => {
   const [inboxesList, setInboxesList] = useState<inboxType[]>([]);
+  // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
+  // @ts-ignore
   const { dispatch } = useContext(ChatContext);  
 
   useEffect(() => {

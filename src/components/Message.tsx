@@ -41,8 +41,9 @@ interface stateType {
 const Message = ({ message, type }: messagePropType) => {
   const [open, setOpen] = useState<boolean>(false);
   const [imageLoading, setImageLoading] = useState<boolean>(true);
-
+  // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
+  // @ts-ignore
   const { data }: { data: stateType } = useContext(ChatContext);
 
   const handleClickOpen = () => {

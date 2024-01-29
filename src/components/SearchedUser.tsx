@@ -39,8 +39,9 @@ const SearchedUser = ({
 }: InboxType) => {
   const [open, setOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
-
+  // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
+  // @ts-ignore
   const { dispatch } = useContext(ChatContext);
 
   const handleClose = (
@@ -97,6 +98,7 @@ const SearchedUser = ({
       }
     } catch (error) {
       setOpen(true);
+      // @ts-ignore
       setErrorMessage(error.code);
     }
   };

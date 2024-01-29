@@ -23,8 +23,9 @@ type userType = {
 
 const Right = () => {
   const [blockedProp, setBlockedProp] = useState<boolean>(false);
-
+  // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
+  // @ts-ignore
   const { data }: { data: stateType } = useContext(ChatContext);
 
   useEffect(() => {

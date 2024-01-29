@@ -60,6 +60,7 @@ const Search = () => {
       });
     } catch (error) {
       setOpen(true);
+      // @ts-ignore
       setErrorMessage(error.code);
     }
   };

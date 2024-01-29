@@ -8,6 +8,7 @@ type userType = {
   currentUser: User | null;
 };
 const LeftNavbar = () => {
+  // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
 
   return (

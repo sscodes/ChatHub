@@ -93,6 +93,7 @@ const Register = (): ReactElement => {
         const uploadTask = uploadBytesResumable(storageRef, values.file);
 
         uploadTask.on(
+          // @ts-ignore
           (error: unknown) => {
             setLoading(false);
             setOpen(true);
@@ -158,6 +159,7 @@ const Register = (): ReactElement => {
         handleSubmit(Formik.values);
       } catch (error) {
         setOpen(true);
+        // @ts-ignore
         setErrorMessage(error.code);
       }
       action.resetForm();
