@@ -2,6 +2,7 @@ import {
   Alert,
   Box,
   Button,
+  Grid,
   Slide,
   SlideProps,
   Snackbar,
@@ -39,7 +40,10 @@ const ForgotPassword = () => {
     setSuccessOpen(false);
   };
 
-  const handleErrorClose = (_event: SyntheticEvent | Event, reason?: string) => {
+  const handleErrorClose = (
+    _event: SyntheticEvent | Event,
+    reason?: string
+  ) => {
     if (reason === 'clickaway') {
       return;
     }
@@ -73,14 +77,23 @@ const ForgotPassword = () => {
   return (
     <>
       <Title />
-      <Box
-        display={'grid'}
+      <Grid
+        container
         height={'90vh'}
         style={{
           placeItems: 'center',
         }}
       >
-        <Box bgcolor={'#ff9800'} width={'25rem'} p={2} borderRadius={'2%'}>
+        <Grid item xs={1} sm={2} lg={4}></Grid>
+        <Grid
+          item
+          xs={10}
+          sm={8}
+          lg={4}
+          bgcolor={'#ff9800'}
+          p={2}
+          borderRadius={'2%'}
+        >
           <Box textAlign={'center'}>
             <Typography variant='h5' gutterBottom>
               <b>Forgot your password?</b>
@@ -92,7 +105,6 @@ const ForgotPassword = () => {
             spacing={2}
             direction='column'
             display={'flex'}
-            width={'400px'}
             component={'form'}
             onSubmit={sendForgotPasswordEmail}
           >
@@ -113,8 +125,9 @@ const ForgotPassword = () => {
               Confirm email
             </Button>
           </Stack>
-        </Box>
-      </Box>
+        </Grid>
+        <Grid item xs={1} sm={2} lg={4}></Grid>
+      </Grid>
       <Snackbar
         open={errorOpen}
         autoHideDuration={5000}

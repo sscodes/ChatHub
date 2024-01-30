@@ -7,6 +7,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  Grid,
   Slide,
   SlideProps,
   Snackbar,
@@ -168,14 +169,23 @@ const Register = (): ReactElement => {
   ) : (
     <>
       <Title />
-      <Box
-        display={'grid'}
+      <Grid
+        container
         mt={1}
         style={{
           placeItems: 'center',
         }}
       >
-        <Box bgcolor={'#ff9800'} width={'25rem'} p={2} borderRadius={'2%'}>
+        <Grid item xs={1} sm={2} lg={4}></Grid>
+        <Grid
+          item
+          xs={10}
+          sm={8}
+          lg={4}
+          bgcolor={'#ff9800'}
+          p={2}
+          borderRadius={'2%'}
+        >
           <div style={{ textAlign: 'center' }}>
             <Typography variant='h5' gutterBottom>
               <b>Chat Now: Quick Sign-Up!</b>
@@ -186,7 +196,6 @@ const Register = (): ReactElement => {
             direction='column'
             component={'form'}
             display={'flex'}
-            width={'400px'}
             onSubmit={Formik.handleSubmit}
           >
             <Input
@@ -363,8 +372,9 @@ const Register = (): ReactElement => {
               </Link>
             </Typography>
           </Box>
-        </Box>
-      </Box>
+        </Grid>
+        <Grid item xs={1} sm={2} lg={4}></Grid>
+      </Grid>
       <Snackbar
         open={open}
         autoHideDuration={5000}

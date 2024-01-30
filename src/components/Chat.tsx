@@ -103,7 +103,12 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
         ))}
     </>
   ) : (
-    <Box display={'flex'} justifyContent={'center'} marginTop={'25vh'}>
+    <Box
+      display={'flex'}
+      justifyContent={'center'}
+      marginTop={'25vh'}
+      height={'18rem'}
+    >
       <Box textAlign={'center'}>
         <Typography variant='h2' color={'orange'}>
           Welcome!

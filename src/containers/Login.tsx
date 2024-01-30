@@ -4,6 +4,7 @@ import {
   Alert,
   Box,
   Button,
+  Grid,
   Slide,
   SlideProps,
   Snackbar,
@@ -84,14 +85,23 @@ const Login = () => {
   return (
     <>
       <Title />
-      <Box
-        display={'grid'}
+      <Grid
+        container
         height={'90vh'}
         style={{
           placeItems: 'center',
         }}
       >
-        <Box bgcolor={'#ff9800'} width={'25rem'} p={2} borderRadius={'2%'}>
+        <Grid item xs={1} sm={2} lg={4}></Grid>
+        <Grid
+          item
+          xs={10}
+          sm={8}
+          lg={4}
+          bgcolor={'#ff9800'}
+          p={2}
+          borderRadius={'2%'}
+        >
           <Box textAlign={'center'}>
             <Typography variant='h5' gutterBottom>
               <b>Already have an account, login!</b>
@@ -101,7 +111,6 @@ const Login = () => {
             spacing={2}
             direction='column'
             display={'flex'}
-            width={'400px'}
             component={'form'}
             onSubmit={Formik.handleSubmit}
           >
@@ -170,8 +179,9 @@ const Login = () => {
               </Link>
             </Typography>
           </Box>
-        </Box>
-      </Box>
+        </Grid>
+        <Grid item xs={1} sm={2} lg={4}></Grid>
+      </Grid>
       <Snackbar
         open={open}
         autoHideDuration={5000}

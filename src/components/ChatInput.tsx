@@ -167,7 +167,7 @@ const ChatInput = () => {
         InputProps={{
           endAdornment: (
             <Grid container spacing={2} width={100}>
-              <Grid item>
+              <Grid item xs={6}>
                 <input
                   accept='.png, .jpg, .jpeg'
                   style={{ display: 'none' }}
@@ -180,7 +180,7 @@ const ChatInput = () => {
                   <AddPhotoAlternateIcon />
                 </label>
               </Grid>
-              <Grid item style={{ cursor: 'pointer' }} onClick={sendMessage}>
+              <Grid item xs={6} style={{ cursor: 'pointer' }} onClick={sendMessage}>
                 <SendIcon />
               </Grid>
             </Grid>

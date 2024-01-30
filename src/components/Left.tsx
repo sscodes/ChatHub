@@ -1,12 +1,13 @@
+import { Box } from '@mui/material';
 import LeftNavbar from './LeftNavbar';
 import Search from './Search';
 
 const Left = () => {
   return (
-    <div>
+    <Box bgcolor={'black'}>
       <LeftNavbar />
       <Search />
-    </div>
+    </Box>
   );
 };
 

@@ -5,12 +5,14 @@ import {
   Dialog,
   Grid,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import { Timestamp } from 'firebase/firestore';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/authContext';
 import { User } from 'firebase/auth';
 import { ChatContext } from '../context/chatContext';
+import { useTheme } from '@emotion/react';
 
 interface messageType {
   id: string;
@@ -46,6 +48,12 @@ const Message = ({ message, type }: messagePropType) => {
   // @ts-ignore
   const { data }: { data: stateType } = useContext(ChatContext);
 
+  const theme = useTheme();
+  // @ts-ignore
+  const isSmallScreen = useMediaQuery(theme?.breakpoints.between('xs', 'md'));
+  // @ts-ignore
+  const isMediumScreen = useMediaQuery(theme?.breakpoints.between('md', 'xl'));
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -65,10 +73,18 @@ const Message = ({ message, type }: messagePropType) => {
             alignItems={'center'}
             justifyContent={'center'}
           >
-            <Avatar
-              src={data.user.photoURL}
-              style={{ width: 45, height: 45 }}
-            />
+            {isMediumScreen && (
+              <Avatar
+                src={data.user.photoURL}
+                style={{ width: 45, height: 45 }}
+              />
+            )}
+            {isSmallScreen && (
+              <Avatar
+                src={data.user.photoURL}
+                style={{ width: 25, height: 25 }}
+              />
+            )}
           </Grid>
         )}
         <Grid item xs={9}>
@@ -114,10 +130,18 @@ const Message = ({ message, type }: messagePropType) => {
             alignItems={'center'}
             justifyContent={'center'}
           >
-            <Avatar
-              src={currentUser?.photoURL || ''}
-              style={{ width: 45, height: 45 }}
-            />
+            {isMediumScreen && (
+              <Avatar
+                src={currentUser?.photoURL + ''}
+                style={{ width: 45, height: 45 }}
+              />
+            )}
+            {isSmallScreen && (
+              <Avatar
+                src={currentUser?.photoURL + ''}
+                style={{ width: 25, height: 25 }}
+              />
+            )}
           </Grid>
         )}
       </Grid>
