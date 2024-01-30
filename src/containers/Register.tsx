@@ -14,7 +14,6 @@ import {
   Typography,
   createTheme,
 } from '@mui/material';
-import { FirebaseError } from 'firebase/app';
 import {
   UserCredential,
   createUserWithEmailAndPassword,
@@ -28,10 +27,15 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import {
+  UploadTaskSnapshot,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from 'firebase/storage';
 import { useFormik } from 'formik';
 import { ReactElement, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Input from '../components/Input';
 import Title from '../components/Title';
 import { auth, db, storage } from '../config/firebase';
@@ -65,8 +69,6 @@ const Register = (): ReactElement => {
   const [confirmPasswordField, setConfirmPasswordField] =
     useState<string>('password');
 
-  const navigate = useNavigate();
-
   const handleClose = (
     _event: React.SyntheticEvent | Event,
     reason?: string
@@ -91,29 +93,11 @@ const Register = (): ReactElement => {
       const storageRef = ref(storage, values.username);
       if (values.file) {
         const uploadTask = uploadBytesResumable(storageRef, values.file);
+        // setWaitMessage('Please wait a while for the image to get sent.');
 
-        uploadTask.on(
-          // @ts-ignore
-          (error: unknown) => {
-            setLoading(false);
-            setOpen(true);
-
-            if (error instanceof FirebaseError) {
-              setErrorMessage(error.code);
-            } else if (
-              typeof error === 'object' &&
-              error !== null &&
-              'code' in error
-            ) {
-              // You can access 'code' property safely here
-              setErrorMessage((error as { code: string }).code);
-            } else {
-              // Handle other types of errors or unknown types
-              setErrorMessage(String(error));
-            }
-          },
-          async () => {
-            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        uploadTask
+          .then(async (snapshot: UploadTaskSnapshot) => {
+            const downloadURL = await getDownloadURL(snapshot.ref);
             await updateProfile(res.user, {
               displayName: values.username,
               photoURL: downloadURL,
@@ -125,18 +109,18 @@ const Register = (): ReactElement => {
               photoURL: downloadURL,
             });
             await setDoc(doc(db, 'userChats', res.user.uid), {});
-            navigate('/');
-          }
-        );
+          })
+          .catch((error) => {
+            setLoading(false);
+            setOpen(true);
+            setErrorMessage(error.code);
+          });
       }
     } catch (error: unknown) {
       setOpen(true);
       setLoading(false);
-      if (error instanceof FirebaseError) {
-        setErrorMessage(error.code);
-      } else {
-        setErrorMessage(error + '');
-      }
+      // @ts-ignore
+      setErrorMessage(error.code);
     }
   };
 

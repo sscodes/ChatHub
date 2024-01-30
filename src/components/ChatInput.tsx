@@ -109,7 +109,6 @@ const ChatInput = () => {
           .catch((error) => {
             setErrorOpen(true);
             setErrorMessage(error.code);
-            console.log(error);
           });
       } else {
         try {
@@ -125,7 +124,6 @@ const ChatInput = () => {
           setErrorOpen(true);
           // @ts-ignore
           setErrorMessage(error.code);
-          console.log(error);
         }
       }
     }

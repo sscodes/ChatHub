@@ -59,7 +59,6 @@ const Login = () => {
     validateOnChange: true,
     validateOnBlur: true,
     onSubmit: async (values, action) => {
-      console.log(values);
       try {
         await signInWithEmailAndPassword(auth, values.email, values.password);
         navigate('/');
