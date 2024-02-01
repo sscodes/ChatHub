@@ -1,4 +1,4 @@
-Hello everyone, this is a Web Chat Application, made primarily using **React.js**, **TypeScript** and **MaterialUI** for the frontend code and **Firebase** for the backend.
+Hello everyone, this is a Web Chat Application, made primarily using **React.js**, **TypeScript** and **MaterialUI** for the frontend and **Firebase** for the backend.
 
 ### Link to the website - [ChatHub](https://chathub-4774.web.app/)
 
