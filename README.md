@@ -1,30 +1,30 @@
-# React + TypeScript + Vite
+Hello everyone, this is a Web Chat Application, made primarily using **React.js**, **TypeScript** and **MaterialUI** for the frontend code and **Firebase** for the backend.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Link to the website - [ChatHub](https://chathub-4774.web.app/)
 
-Currently, two official plugins are available:
+### Features implemented in this project:
+- Complete authentication and authorization using Firebase auth.
+- Completely responsive UI with each component built using Material UI
+along with React-TypeScript.
+- Realtime chat application using Firebase storage with photo sharing
+feature.
+- Password reset feature using Firebase for cases when the users forget
+their password.
+Users can block and unblock each other. 
+- Users can search other users by their username like any social media platform and chat with them on the
+go.
+- Users can set their profile picture which will be displayed along with the
+chats.
+- Each chat is designated with its sent time and sender profile picture.
+- Hosted and deployed the entire application using Firebase hosting.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Technologies used:
+1. React.js
+2. Context API
+3. TypeScript
+4. MaterialUI
+5. Formik
+6. Yup
+7. Firebase
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Please do visit and share your feedback! :)
