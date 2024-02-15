@@ -1,5 +1,5 @@
 body {
-  background-color: #000000;
+  background-color: blanchedalmond;
 }
 
 /* width */
@@ -9,17 +9,17 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  border-left: 0.1rem solid orange;
+  border-left: 0.1rem solid indigo;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: orange;
+  background: indigo;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(251, 138, 17);
+  background: rgb(56, 0, 96);
 }
 
 .inbox {

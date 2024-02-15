@@ -8,12 +8,12 @@ import {
   Button,
   CircularProgress,
   Grid,
+  Hidden,
   Slide,
   SlideProps,
   Snackbar,
   Stack,
   Typography,
-  createTheme,
 } from '@mui/material';
 import {
   UserCredential,
@@ -38,7 +38,6 @@ import { useFormik } from 'formik';
 import { ReactElement, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../components/Input';
-import Title from '../components/Title';
 import { auth, db, storage } from '../config/firebase';
 import { registerSchema } from '../config/schema';
 
@@ -151,15 +150,6 @@ const Register = (): ReactElement => {
     },
   });
 
-  const theme = createTheme({
-    palette: {
-      warning: {
-        main: '#ed6c02',
-        dark: '#e65100',
-      },
-    },
-  });
-
   return loading ? (
     <>
       <Box position={'absolute'} top={'50%'} left={'50%'}>
@@ -168,212 +158,243 @@ const Register = (): ReactElement => {
     </>
   ) : (
     <>
-      <Title />
       <Grid
         container
-        mt={1}
         style={{
           placeItems: 'center',
         }}
+        height={'95vh'}
+        rowGap={4}
       >
-        <Grid item xs={1} sm={2} lg={4}></Grid>
-        <Grid
-          item
-          xs={10}
-          sm={8}
-          lg={4}
-          bgcolor={'#ff9800'}
-          p={2}
-          borderRadius={'2%'}
-        >
-          <div style={{ textAlign: 'center' }}>
-            <Typography variant='h5' gutterBottom>
-              <b>Chat Now: Quick Sign-Up!</b>
-            </Typography>
-          </div>
-          <Stack
-            spacing={2}
-            direction='column'
-            component={'form'}
-            display={'flex'}
-            onSubmit={Formik.handleSubmit}
-          >
-            <Input
-              label='Username'
-              type='text'
-              name='username'
-              value={Formik.values.username}
-              onChange={Formik.handleChange}
-              onBlur={Formik.handleBlur}
-              error={
-                Formik.touched.username && Formik.errors.username ? true : false
-              }
-              helperText={
-                Formik.touched.username &&
-                Formik.errors.username && (
-                  <b style={{ color: 'red' }}>{Formik.errors.username}</b>
-                )
-              }
-            />
-            <Input
-              label='Email'
-              type='email'
-              name='email'
-              value={Formik.values.email}
-              onChange={Formik.handleChange}
-              onBlur={Formik.handleBlur}
-              error={Formik.touched.email && Formik.errors.email ? true : false}
-              helperText={
-                Formik.touched.email &&
-                Formik.errors.email && (
-                  <b style={{ color: 'red' }}>{Formik.errors.email}</b>
-                )
-              }
-            />
-            <Input
-              label='Password'
-              type={passwordField}
-              name='password'
-              value={Formik.values.password}
-              onChange={Formik.handleChange}
-              onBlur={Formik.handleBlur}
-              error={
-                Formik.touched.password && Formik.errors.password ? true : false
-              }
-              helperText={
-                Formik.touched.password &&
-                Formik.errors.password && (
-                  <b style={{ color: 'red' }}>{Formik.errors.password}</b>
-                )
-              }
-              InputProps={{
-                endAdornment: (
-                  <div
-                    onClick={() => {
-                      if (passwordField === 'password')
-                        setPasswordField('text');
-                      else setPasswordField('password');
+        <Grid item xs={12} lg={6} alignItems={'center'}>
+          <Grid container justifyContent={'center'} rowGap={5}>
+            <Grid item xs={12}>
+              <Box display={'flex'} justifyContent={'center'}>
+                <img src='src/assets/Logo.svg' alt='logo' width={200} />
+              </Box>
+            </Grid>
+            <Hidden lgDown>
+              <Grid item xs={12}>
+                <Box display={'flex'} justifyContent={'center'}>
+                  <img src='src/assets/Register.svg' alt='logo' width={500} />
+                </Box>
+              </Grid>
+            </Hidden>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} lg={6}>
+          <Box display={'flex'} justifyContent={'center'}>
+            <Box width={470} bgcolor={'#4b0082'} p={2} borderRadius={'2%'}>
+              <div style={{ textAlign: 'center' }}>
+                <Typography
+                  variant='h5'
+                  gutterBottom
+                  color={'blanchedalmond'}
+                  fontFamily={'Nunito Sans'}
+                >
+                  <b>Connect. Chat. Share.</b>
+                </Typography>
+              </div>
+              <Stack
+                spacing={2}
+                direction='column'
+                component={'form'}
+                display={'flex'}
+                onSubmit={Formik.handleSubmit}
+              >
+                <Input
+                  label='Username'
+                  type='text'
+                  name='username'
+                  value={Formik.values.username}
+                  onChange={Formik.handleChange}
+                  onBlur={Formik.handleBlur}
+                  error={
+                    Formik.touched.username && Formik.errors.username
+                      ? true
+                      : false
+                  }
+                  helperText={
+                    Formik.touched.username &&
+                    Formik.errors.username && (
+                      <b style={{ color: 'red' }}>{Formik.errors.username}</b>
+                    )
+                  }
+                />
+                <Input
+                  label='Email'
+                  type='email'
+                  name='email'
+                  value={Formik.values.email}
+                  onChange={Formik.handleChange}
+                  onBlur={Formik.handleBlur}
+                  error={
+                    Formik.touched.email && Formik.errors.email ? true : false
+                  }
+                  helperText={
+                    Formik.touched.email &&
+                    Formik.errors.email && (
+                      <b style={{ color: 'red' }}>{Formik.errors.email}</b>
+                    )
+                  }
+                />
+                <Input
+                  label='Password'
+                  type={passwordField}
+                  name='password'
+                  value={Formik.values.password}
+                  onChange={Formik.handleChange}
+                  onBlur={Formik.handleBlur}
+                  error={
+                    Formik.touched.password && Formik.errors.password
+                      ? true
+                      : false
+                  }
+                  helperText={
+                    Formik.touched.password &&
+                    Formik.errors.password && (
+                      <b style={{ color: 'red' }}>{Formik.errors.password}</b>
+                    )
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <div
+                        onClick={() => {
+                          if (passwordField === 'password')
+                            setPasswordField('text');
+                          else setPasswordField('password');
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {passwordField === 'password' ? (
+                          <RemoveRedEyeIcon />
+                        ) : (
+                          <VisibilityOffIcon />
+                        )}
+                      </div>
+                    ),
+                  }}
+                />
+                <Input
+                  label='Confirm Password'
+                  type={confirmPasswordField}
+                  name='confirmPassword'
+                  value={Formik.values.confirmPassword}
+                  onChange={Formik.handleChange}
+                  onBlur={Formik.handleBlur}
+                  error={
+                    Formik.touched.confirmPassword &&
+                    Formik.errors.confirmPassword
+                      ? true
+                      : false
+                  }
+                  helperText={
+                    Formik.touched.confirmPassword &&
+                    Formik.errors.confirmPassword && (
+                      <b style={{ color: 'red' }}>
+                        {Formik.errors.confirmPassword}
+                      </b>
+                    )
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <div
+                        onClick={() => {
+                          if (confirmPasswordField === 'password')
+                            setConfirmPasswordField('text');
+                          else setConfirmPasswordField('password');
+                        }}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {confirmPasswordField === 'password' ? (
+                          <RemoveRedEyeIcon />
+                        ) : (
+                          <VisibilityOffIcon />
+                        )}
+                      </div>
+                    ),
+                  }}
+                />
+                <Box
+                  display={'grid'}
+                  style={{
+                    placeItems: 'center',
+                  }}
+                >
+                  <input
+                    accept='.png, .jpg, .jpeg'
+                    style={{ display: 'none' }}
+                    id='file-input'
+                    type='file'
+                    name='file'
+                    onChange={(e) => {
+                      Formik.setFieldValue('file', e.target.files?.[0] || null);
                     }}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    {passwordField === 'password' ? (
-                      <RemoveRedEyeIcon />
-                    ) : (
-                      <VisibilityOffIcon />
-                    )}
-                  </div>
-                ),
-              }}
-            />
-            <Input
-              label='Confirm Password'
-              type={confirmPasswordField}
-              name='confirmPassword'
-              value={Formik.values.confirmPassword}
-              onChange={Formik.handleChange}
-              onBlur={Formik.handleBlur}
-              error={
-                Formik.touched.confirmPassword && Formik.errors.confirmPassword
-                  ? true
-                  : false
-              }
-              helperText={
-                Formik.touched.confirmPassword &&
-                Formik.errors.confirmPassword && (
-                  <b style={{ color: 'red' }}>
-                    {Formik.errors.confirmPassword}
-                  </b>
-                )
-              }
-              InputProps={{
-                endAdornment: (
-                  <div
-                    onClick={() => {
-                      if (confirmPasswordField === 'password')
-                        setConfirmPasswordField('text');
-                      else setConfirmPasswordField('password');
-                    }}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    {confirmPasswordField === 'password' ? (
-                      <RemoveRedEyeIcon />
-                    ) : (
-                      <VisibilityOffIcon />
-                    )}
-                  </div>
-                ),
-              }}
-            />
-            <Box
-              display={'grid'}
-              style={{
-                placeItems: 'center',
-              }}
-            >
-              <input
-                accept='.png, .jpg, .jpeg'
-                style={{ display: 'none' }}
-                id='file-input'
-                type='file'
-                name='file'
-                onChange={(e) => {
-                  Formik.setFieldValue('file', e.target.files?.[0] || null);
-                }}
-              />
-              <label htmlFor='file-input'>
+                  />
+                  <label htmlFor='file-input'>
+                    <Button
+                      variant='contained'
+                      component='span'
+                      style={{ backgroundColor: 'rgb(246, 215, 169)' }}
+                    >
+                      <Stack
+                        direction={'row'}
+                        spacing={1}
+                        display={'flex'}
+                        alignItems={'center'}
+                      >
+                        <Avatar>
+                          <AddPhotoAlternateIcon style={{ color: 'indigo' }} />
+                        </Avatar>
+                        <Typography variant='subtitle2' color={'indigo'}>
+                          <b>Set Profile Picture</b>
+                        </Typography>
+                      </Stack>
+                    </Button>
+                  </label>
+                  {Formik.errors.file && Formik.touched.file ? (
+                    <Typography
+                      variant='subtitle2'
+                      color={'white'}
+                      bgcolor={'red'}
+                      p={1}
+                      mt={1}
+                    >
+                      {Formik.errors.file}
+                    </Typography>
+                  ) : null}
+                  {Formik.values.file && (
+                    <p style={{ color: 'rgb(246, 215, 169)' }}>
+                      Selected File: {Formik.values.file.name}
+                    </p>
+                  )}
+                </Box>
                 <Button
                   variant='contained'
-                  component='span'
-                  style={{ backgroundColor: theme.palette.warning.dark }}
+                  style={{
+                    backgroundColor: 'rgb(246, 215, 169)',
+                    color: 'indigo',
+                  }}
+                  type='submit'
                 >
-                  <Stack
-                    direction={'row'}
-                    spacing={1}
-                    display={'flex'}
-                    alignItems={'center'}
-                  >
-                    <Avatar>
-                      <AddPhotoAlternateIcon />
-                    </Avatar>
-                    <Typography variant='subtitle2' color={'white'}>
-                      Set Profile Picture
-                    </Typography>
-                  </Stack>
+                  <b>Register</b>
                 </Button>
-              </label>
-              {Formik.errors.file && Formik.touched.file ? (
+              </Stack>
+              <Box textAlign={'center'} mt={1}>
                 <Typography
                   variant='subtitle2'
-                  color={'white'}
-                  bgcolor={'red'}
-                  p={1}
-                  mt={1}
+                  color={'blanchedalmond'}
+                  fontFamily={'Nunito Sans'}
                 >
-                  {Formik.errors.file}
+                  Already have an account?&nbsp;
+                  <Link to={'/login'}>
+                    <u style={{ color: 'blanchedalmond' }}>Login!</u>
+                  </Link>
                 </Typography>
-              ) : null}
-              {Formik.values.file && (
-                <p>Selected File: {Formik.values.file.name}</p>
-              )}
+              </Box>
             </Box>
-            <Button
-              variant='contained'
-              style={{ backgroundColor: theme.palette.warning.dark }}
-              type='submit'
-            >
-              Register
-            </Button>
-          </Stack>
-          <Box textAlign={'center'} mt={1}>
-            <Typography variant='subtitle2'>
-              Already have an account?&nbsp;
-              <Link to={'/login'}>
-                <u style={{ color: 'black' }}>Login!</u>
-              </Link>
-            </Typography>
           </Box>
         </Grid>
-        <Grid item xs={1} sm={2} lg={4}></Grid>
       </Grid>
       <Snackbar
         open={open}

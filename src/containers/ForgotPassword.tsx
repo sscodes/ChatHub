@@ -8,13 +8,11 @@ import {
   Snackbar,
   Stack,
   Typography,
-  createTheme,
 } from '@mui/material';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
-import Title from '../components/Title';
 import { auth } from '../config/firebase';
 
 const SlideTransition = (props: SlideProps) => {
@@ -65,68 +63,63 @@ const ForgotPassword = () => {
       });
   };
 
-  const theme = createTheme({
-    palette: {
-      warning: {
-        main: '#ed6c02',
-        dark: '#e65100',
-      },
-    },
-  });
-
   return (
     <>
-      <Title />
+      <Box display={'flex'} justifyContent={'center'} mt={2}>
+        <img src='src/assets/Logo.svg' alt='logo' width={150} />
+      </Box>
       <Grid
         container
-        height={'90vh'}
+        height={'70vh'}
         style={{
           placeItems: 'center',
         }}
       >
-        <Grid item xs={1} sm={2} lg={4}></Grid>
-        <Grid
-          item
-          xs={10}
-          sm={8}
-          lg={4}
-          bgcolor={'#ff9800'}
-          p={2}
-          borderRadius={'2%'}
-        >
-          <Box textAlign={'center'}>
-            <Typography variant='h5' gutterBottom>
-              <b>Forgot your password?</b>
-              <br />
-              <b>No worries!</b>
-            </Typography>
+        <Grid item xs={12}>
+          <Box display={'flex'} justifyContent={'center'}>
+            <Box width={400} bgcolor={'#4b0082'} p={2} borderRadius={'2%'}>
+              <Box textAlign={'center'}>
+                <Typography
+                  variant='h5'
+                  gutterBottom
+                  color={'blanchedalmond'}
+                  fontFamily={'Nunito Sans'}
+                >
+                  <b>Forgot your password?</b>
+                  <br />
+                  <b>No worries!</b>
+                </Typography>
+              </Box>
+              <Stack
+                spacing={2}
+                direction='column'
+                display={'flex'}
+                component={'form'}
+                onSubmit={sendForgotPasswordEmail}
+              >
+                <Input
+                  label='Email'
+                  name='email'
+                  type='text'
+                  onChange={(
+                    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+                  ) => setEmail(e.target.value)}
+                  onBlur={() => null}
+                />
+                <Button
+                  variant='contained'
+                  style={{
+                    backgroundColor: 'rgb(246, 215, 169)',
+                    color: 'indigo',
+                  }}
+                  type='submit'
+                >
+                  <b>Confirm email</b>
+                </Button>
+              </Stack>
+            </Box>
           </Box>
-          <Stack
-            spacing={2}
-            direction='column'
-            display={'flex'}
-            component={'form'}
-            onSubmit={sendForgotPasswordEmail}
-          >
-            <Input
-              label='Email'
-              name='email'
-              type='text'
-              onChange={(
-                e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-              ) => setEmail(e.target.value)}
-              onBlur={() => null}
-            />
-            <Button
-              variant='contained'
-              style={{ backgroundColor: theme.palette.warning.dark }}
-              type='submit'
-            >
-              Confirm email
-            </Button>
-          </Stack>
         </Grid>
-        <Grid item xs={1} sm={2} lg={4}></Grid>
       </Grid>
       <Snackbar
         open={errorOpen}

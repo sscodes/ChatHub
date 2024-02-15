@@ -54,7 +54,7 @@ const Input = ({
         value={value}
         onChange={onChange}
         onBlur={onBlur}
-        style={{ backgroundColor: '#dfab62' }}
+        style={{ backgroundColor: 'rgb(246, 215, 169)' }}
         color='warning'
         error={error}
         helperText={helperText}
@@ -67,6 +67,7 @@ const Input = ({
           mt={1}
           ml={1}
           onClick={toForgotPassword}
+          color={'rgb(246, 215, 169)'}
         >
           Forgot Password?
         </Typography>
