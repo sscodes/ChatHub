@@ -76,7 +76,7 @@ const Inboxes = () => {
           ))
       ) : (
         <Box display={'flex'} justifyContent={'center'} mt={2}>
-          <CircularProgress color='warning' />
+          <CircularProgress color='secondary' />
         </Box>
       )}
     </Box>

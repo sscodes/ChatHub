@@ -24,12 +24,12 @@ body {
 
 .inbox {
   transition: 300ms;
-  color: orange;
+  color: blanchedalmond;
 }
 
 .inbox:hover {
-  background-color: orange;
+  background-color: rgb(178, 182, 255);
   cursor: pointer;
-  transition: 300ms;
-  color: black;
+  transition: 200ms;
+  color: indigo;
 }

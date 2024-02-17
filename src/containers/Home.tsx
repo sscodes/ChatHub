@@ -56,25 +56,31 @@ const Home = () => {
   }, [currentUser?.displayName]);
 
   return loading ? (
-    <Stack position={'absolute'} top={'30%'} left={'25%'} spacing={2}>
-      <Typography color={'orange'} variant='h4'>
-        Please wait while we get your account ready!
-      </Typography>
-      <Box display={'flex'} justifyContent={'center'}>
-        <CircularProgress color='warning' />
-      </Box>
+    <Stack
+      display={'flex'}
+      justifyContent={'center'}
+      alignItems={'center'}
+      spacing={2}
+      height={'90vh'}
+    >
+      <Stack gap={5}>
+        <Typography
+          color={'indigo'}
+          variant='h4'
+          fontFamily={'Nunito Sans'}
+          fontWeight={700}
+        >
+          Please wait while we get your account ready!
+        </Typography>
+        <Box display={'flex'} justifyContent={'center'}>
+          <CircularProgress color='secondary' />
+        </Box>
+      </Stack>
     </Stack>
   ) : isMediumScreen ? (
     <Box display={'grid'} justifyContent={'center'}>
-      <Grid
-        width={'80vw'}
-        border={4}
-        borderColor={'orange'}
-        borderRadius={3}
-        mt={2}
-        container
-      >
-        <Grid md={4} item borderRight={3} borderColor={'orange'}>
+      <Grid width={'80vw'} borderRadius={3} mt={2} container>
+        <Grid md={4} item>
           <Left />
         </Grid>
         <Grid md={8} item>
@@ -94,27 +100,36 @@ const Home = () => {
           <Left />
           <Button
             variant='contained'
-            color='warning'
+            style={{
+              backgroundColor: 'blanchedalmond',
+              color: 'indigo',
+              paddingTop: '2%',
+              paddingBottom: '2%',
+            }}
             onClick={toggleDrawer('top', false)}
             startIcon={<CloseIcon />}
           >
-            Close
+            <Typography fontFamily={'Nunito Sans'}>
+              <b>Close</b>
+            </Typography>
           </Button>
         </SwipeableDrawer>
         <Box display={'flex'} justifyContent={'center'}>
           <Button
-            variant='outlined'
-            color='warning'
+            variant='contained'
+            style={{ backgroundColor: 'indigo', color: 'blanchedalmond' }}
             onClick={toggleDrawer('top', true)}
             startIcon={<SearchIcon />}
           >
-            Search Users
+            <Typography fontFamily={'Nunito Sans'}>
+              <b>Search Users</b>
+            </Typography>
           </Button>
         </Box>
         <Grid container>
           <Grid item xs={1}></Grid>
           <Grid item xs={10}>
-            <Box border={4} borderColor={'orange'} borderRadius={3} mt={2}>
+            <Box border={4} borderColor={'indigo'} mt={2}>
               <Right />
             </Box>
           </Grid>

@@ -91,21 +91,21 @@ const Message = ({ message, type }: messagePropType) => {
           {message.text && (
             <Box
               border={2}
-              borderColor={'orange'}
+              borderColor={'indigo'}
               borderRadius={
                 type === 'user' ? '1rem 0 1rem 1rem' : '0 1rem 1rem 1rem'
               }
-              bgcolor={type === 'user' ? 'warning.light' : 'black'}
-              color={type === 'user' ? 'black' : 'warning.light'}
+              bgcolor={type === 'user' ? 'indigo' : 'rgb(178, 182, 255)'}
+              color={type === 'user' ? 'blanchedalmond' : 'indigo'}
               p={1}
             >
-              {message.text}
+              <Typography fontFamily={'Nunito Sans'}>{message.text}</Typography>
             </Box>
           )}
           <Box>
             {message.image && (
               <>
-                {imageLoading && <CircularProgress color='warning' />}
+                {imageLoading && <CircularProgress color='secondary' />}
                 <img
                   src={message?.image}
                   alt=''
@@ -146,7 +146,11 @@ const Message = ({ message, type }: messagePropType) => {
         )}
       </Grid>
       <Box textAlign={'center'}>
-        <Typography variant='subtitle2' color={'orange'}>
+        <Typography
+          variant='subtitle2'
+          color={'indigo'}
+          fontFamily={'Nunito Sans'}
+        >
           {`${message.date.toDate().toLocaleDateString('en-IN')}`}
         </Typography>
       </Box>

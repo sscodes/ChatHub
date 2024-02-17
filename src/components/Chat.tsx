@@ -52,10 +52,12 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
   return data?.user?.displayName ? (
     <>
       <Box
-        height={'25rem'}
+        height={'24.55rem'}
         display={'flex'}
         flexDirection={'column-reverse'}
         style={{ overflowY: 'auto' }}
+        borderRight={2}
+        borderColor={'indigo'}
       >
         <Grid container>
           {messages?.map((message) => (
@@ -93,10 +95,15 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
             display={'flex'}
             justifyContent={'center'}
             alignItems={'center'}
-            bgcolor={'orange'}
-            height={55}
+            bgcolor={'rgb(178, 182, 255)'}
+            height={56}
+            borderBottom={2}
+            borderRight={2}
+            borderColor={'indigo'}
           >
-            <Typography>You can't communicate with them anymore.</Typography>
+            <Typography color={'indigo'} fontFamily={'Nunito Sans'}>
+              You can't communicate with them anymore.
+            </Typography>
           </Box>
         ) : (
           <ChatInput />
@@ -106,16 +113,30 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
     <Box
       display={'flex'}
       justifyContent={'center'}
-      marginTop={'25vh'}
-      height={'18rem'}
+      height={'28.05rem'}
+      borderBottom={2}
+      borderRight={2}
+      borderColor={'indigo'}
     >
-      <Box textAlign={'center'}>
-        <Typography variant='h2' color={'orange'}>
-          Welcome!
-        </Typography>
-        <Typography variant='h4' color={'orange'}>
-          Click on a chat or search someone up to start messaging.
-        </Typography>
+      <Box display={'flex'} justifyContent={'center'} alignItems={'center'}>
+        <Box textAlign={'center'}>
+          <Typography
+            variant='h2'
+            color={'indigo'}
+            fontFamily={'Nunito Sans'}
+            fontWeight={700}
+          >
+            Welcome!
+          </Typography>
+          <Typography
+            variant='h4'
+            color={'indigo'}
+            fontFamily={'Nunito Sans'}
+            fontWeight={700}
+          >
+            Click on a chat or search someone up to start messaging.
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

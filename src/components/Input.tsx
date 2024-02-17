@@ -46,7 +46,7 @@ const Input = ({
     <div>
       <TextField
         label={label}
-        variant='outlined'
+        variant='filled'
         type={type}
         fullWidth
         name={name}
@@ -55,7 +55,7 @@ const Input = ({
         onChange={onChange}
         onBlur={onBlur}
         style={{ backgroundColor: 'rgb(246, 215, 169)' }}
-        color='warning'
+        color='secondary'
         error={error}
         helperText={helperText}
         InputProps={InputProps}

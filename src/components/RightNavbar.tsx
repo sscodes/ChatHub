@@ -83,9 +83,9 @@ const RightNavbar = () => {
 
   const theme = useTheme();
   // @ts-ignore
-  const isSmallScreen = useMediaQuery(theme?.breakpoints.between('xs', 'md'));
+  const isSmallScreen = useMediaQuery(theme?.breakpoints.between('xs', 'sm'));
   // @ts-ignore
-  const isMediumScreen = useMediaQuery(theme?.breakpoints.between('md', 'xl'));
+  const isMediumScreen = useMediaQuery(theme?.breakpoints.between('sm', 'xl'));
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -168,21 +168,30 @@ const RightNavbar = () => {
 
   return (
     <>
-      <Grid py={2} borderBottom={2} borderColor={'orange'} container>
-        <Grid item xs={8} pl={2}>
+      <Grid
+        borderTop={2}
+        borderRight={2}
+        borderColor={'indigo'}
+        bgcolor={'rgb(178, 182, 255)'}
+        height={75}
+        container
+      >
+        <Grid xs={8} item sm={6} lg={8} pl={2} pt={2.5}>
           <Box display={'flex'} alignContent={'center'}>
             {data?.user?.photoURL && (
               <Avatar
                 src={data.user.photoURL}
-                style={{ backgroundColor: 'orange', width: 37, height: 37 }}
+                style={{ backgroundColor: 'indigo', width: 37, height: 37 }}
               />
             )}
             <Typography
               display={'flex'}
               alignItems={'center'}
-              color={'warning.light'}
+              color={'indigo'}
               ml={1}
               variant='h6'
+              fontFamily={'Nunito Sans'}
+              fontWeight={700}
             >
               {data?.user?.displayName}
             </Typography>
@@ -190,10 +199,13 @@ const RightNavbar = () => {
         </Grid>
         <Grid
           xs={4}
+          sm={6}
+          lg={4}
           item
           display={'flex'}
           justifyItems={'end'}
           alignItems={'center'}
+          pt={0.5}
         >
           <Grid container>
             <Grid item>
@@ -209,7 +221,9 @@ const RightNavbar = () => {
                           onClick={blockUnblockUser}
                           style={{ marginRight: '1rem' }}
                         >
-                          Unblock
+                          <Typography fontFamily={'Nunito Sans'}>
+                            <b>Unblock</b>
+                          </Typography>
                         </Button>
                       )}
                       {isSmallScreen && (
@@ -229,7 +243,9 @@ const RightNavbar = () => {
                         onClick={blockUnblockUser}
                         style={{ marginRight: '1rem' }}
                       >
-                        Block
+                        <Typography fontFamily={'Nunito Sans'}>
+                          <b>Block</b>
+                        </Typography>
                       </Button>
                     )}
                     {isSmallScreen && (
@@ -244,15 +260,20 @@ const RightNavbar = () => {
               {isMediumScreen && (
                 <Button
                   variant='contained'
-                  color='warning'
+                  style={{ backgroundColor: 'indigo' }}
                   size='small'
                   onClick={handleClickOpen}
                 >
-                  {isMediumScreen && 'Logout'}
+                  <Typography fontFamily={'Nunito Sans'}>
+                    <b>{isMediumScreen && 'Logout'}</b>
+                  </Typography>
                 </Button>
               )}
               {isSmallScreen && (
-                <IconButton color='warning' onClick={handleClickOpen}>
+                <IconButton
+                  style={{ color: 'indigo' }}
+                  onClick={handleClickOpen}
+                >
                   <LogoutIcon />
                 </IconButton>
               )}
@@ -266,12 +287,20 @@ const RightNavbar = () => {
         keepMounted
         aria-describedby='alert-dialog-slide-description'
       >
-        <Box style={{ backgroundColor: 'orange' }}>
-          <DialogTitle color={'black'}>{'Sign out, already?'}</DialogTitle>
+        <Box style={{ backgroundColor: 'indigo' }}>
+          <DialogTitle
+            color={'blanchedalmond'}
+            fontFamily={'Nunito Sans'}
+            fontWeight={400}
+          >
+            Sign out, already?
+          </DialogTitle>
           <DialogContent>
             <DialogContentText
               id='alert-dialog-slide-description'
-              color={'black'}
+              color={'blanchedalmond'}
+              fontFamily={'Nunito Sans'}
+              fontWeight={400}
             >
               Are you sure, you want to sign out?
             </DialogContentText>
@@ -280,16 +309,20 @@ const RightNavbar = () => {
             <Button
               onClick={handleLogoutClose}
               variant='contained'
-              style={{ backgroundColor: 'black', color: 'orange' }}
+              style={{ backgroundColor: 'blanchedalmond', color: 'indigo' }}
             >
-              No
+              <Typography fontFamily={'Nunito Sans'} fontWeight={400}>
+                No
+              </Typography>
             </Button>
             <Button
               onClick={() => signOut(auth)}
               variant='outlined'
-              style={{ borderColor: 'black', color: 'black' }}
+              style={{ borderColor: 'blanchedalmond', color: 'blanchedalmond' }}
             >
-              Yes
+              <Typography fontFamily={'Nunito Sans'} fontWeight={400}>
+                Yes
+              </Typography>
             </Button>
           </DialogActions>
         </Box>

@@ -4,7 +4,7 @@ import Search from './Search';
 
 const Left = () => {
   return (
-    <Box bgcolor={'black'}>
+    <Box bgcolor={'indigo'}>
       <LeftNavbar />
       <Search />
     </Box>

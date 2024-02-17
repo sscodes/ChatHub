@@ -66,7 +66,7 @@ const ForgotPassword = () => {
   return (
     <>
       <Box display={'flex'} justifyContent={'center'} mt={2}>
-        <img src='src/assets/Logo.svg' alt='logo' width={150} />
+        <img src='src/assets/LogoDark.svg' alt='logo' width={150} />
       </Box>
       <Grid
         container

@@ -2,6 +2,7 @@ import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import SendIcon from '@mui/icons-material/Send';
 import {
   Alert,
+  Box,
   Grid,
   Slide,
   SlideProps,
@@ -150,15 +151,14 @@ const ChatInput = () => {
   };
 
   return (
-    <>
+    <Box borderBottom={2} borderRight={2} borderColor={'indigo'}>
       <TextField
         label={'Type your message...'}
         variant={'filled'}
-        color={'warning'}
+        color={'secondary'}
         style={{
-          backgroundColor: '#dfab62',
+          backgroundColor: 'rgb(178, 182, 255)',
           display: 'flex',
-          borderRadius: '0 0 8px 0',
         }}
         value={message}
         onChange={(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
@@ -180,7 +180,12 @@ const ChatInput = () => {
                   <AddPhotoAlternateIcon />
                 </label>
               </Grid>
-              <Grid item xs={6} style={{ cursor: 'pointer' }} onClick={sendMessage}>
+              <Grid
+                item
+                xs={6}
+                style={{ cursor: 'pointer' }}
+                onClick={sendMessage}
+              >
                 <SendIcon />
               </Grid>
             </Grid>
@@ -196,7 +201,11 @@ const ChatInput = () => {
         <Alert
           onClose={handleImageAlertClose}
           variant='filled'
-          style={{ width: '100%', backgroundColor: 'orange', color: 'black' }}
+          style={{
+            width: '100%',
+            backgroundColor: 'rgb(178, 182, 255)',
+            color: 'indigo',
+          }}
         >
           {imageMessage?.name
             ? `Selected Image: ${imageMessage?.name}`
@@ -218,7 +227,7 @@ const ChatInput = () => {
           {errorMessage}
         </Alert>
       </Snackbar>
-    </>
+    </Box>
   );
 };
 

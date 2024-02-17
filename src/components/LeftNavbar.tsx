@@ -1,8 +1,7 @@
-import { Avatar, CircularProgress, Grid, Typography } from '@mui/material';
+import { Avatar, Box, CircularProgress, Grid, Typography } from '@mui/material';
 import { User } from 'firebase/auth';
 import { useContext } from 'react';
 import { AuthContext } from '../context/authContext';
-import Title from './Title';
 
 type userType = {
   currentUser: User | null;
@@ -12,12 +11,27 @@ const LeftNavbar = () => {
   const { currentUser }: userType = useContext(AuthContext);
 
   return (
-    <Grid py={2} container>
-      <Grid item xs={4} mt={0.4}>
-        <Title />
+    <Grid py={2} container height={75}>
+      <Grid item xs={0.5} mt={0.4}></Grid>
+      <Grid item xs={3.5} mt={0.4}>
+        <Box display={'flex'} justifyContent={'center'}>
+          <img
+            src='src/assets/LogoLight.svg'
+            alt='logo'
+            width={95}
+          />
+        </Box>
       </Grid>
 
-      <Grid item xs={8} display={'flex'} justifyContent={'end'} pr={2}>
+      <Grid
+        item
+        xs={8}
+        display={'flex'}
+        justifyContent={'end'}
+        alignItems={'center'}
+        pr={2}
+        mt={0.4}
+      >
         {currentUser?.photoURL ? (
           <>
             <Avatar
@@ -27,15 +41,17 @@ const LeftNavbar = () => {
             <Typography
               display={'flex'}
               alignItems={'center'}
-              color={'warning.light'}
+              color={'blanchedalmond'}
               ml={1}
               variant='h6'
+              fontFamily={'lato'}
+              fontWeight={700}
             >
               {currentUser?.displayName}
             </Typography>
           </>
         ) : (
-          <CircularProgress color='warning' />
+          <CircularProgress color='secondary' />
         )}
       </Grid>
     </Grid>

@@ -15,28 +15,30 @@ const Inbox = ({ image, username, chat = '', onClick, date }: InboxType) => {
     <Box
       className='inbox'
       borderBottom={1.4}
-      borderColor={'orange'}
+      borderColor={'blanchedalmond'}
       pt={2}
       pb={1}
       onClick={onClick}
     >
       <Box display={'flex'} pl={1}>
         <Box>
-          <Avatar src={image} style={{ backgroundColor: 'orange' }} />
+          <Avatar src={image} />
         </Box>
         <Grid container display={'flex'} ml={1} alignItems={'top'}>
           <Grid item xs={12}>
-            <Typography>
+            <Typography fontFamily={'lato'}>
               <b>{username}</b>
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography variant='subtitle2'>{chat}</Typography>
+            <Typography variant='subtitle2' fontFamily={'lato'}>
+              {chat}
+            </Typography>
           </Grid>
         </Grid>
       </Box>
       <Box display={'flex'} justifyContent={'center'}>
-        <Typography variant='subtitle2'>
+        <Typography variant='subtitle2' fontFamily={'lato'}>
           {date?.toDate().toLocaleDateString('en-IN')}
         </Typography>
       </Box>

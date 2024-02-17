@@ -75,13 +75,11 @@ const Search = () => {
         value={username}
         label={'Find an user...'}
         variant={'filled'}
-        color={'warning'}
+        color={'secondary'}
         type={'search'}
         style={{
-          backgroundColor: '#dfab62',
+          backgroundColor: 'rgb(178, 182, 255)',
           display: 'flex',
-          borderTop: '0.2rem solid orange',
-          borderBottom: '0.2rem solid orange',
         }}
         onChange={(e) => {
           setUsername(e.target.value);

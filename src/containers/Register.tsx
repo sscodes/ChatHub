@@ -153,7 +153,7 @@ const Register = (): ReactElement => {
   return loading ? (
     <>
       <Box position={'absolute'} top={'50%'} left={'50%'}>
-        <CircularProgress color='warning' />
+        <CircularProgress color='secondary' />
       </Box>
     </>
   ) : (
@@ -170,7 +170,7 @@ const Register = (): ReactElement => {
           <Grid container justifyContent={'center'} rowGap={5}>
             <Grid item xs={12}>
               <Box display={'flex'} justifyContent={'center'}>
-                <img src='src/assets/Logo.svg' alt='logo' width={200} />
+                <img src='src/assets/LogoDark.svg' alt='logo' width={200} />
               </Box>
             </Grid>
             <Hidden lgDown>
