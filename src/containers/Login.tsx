@@ -19,11 +19,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 import { auth } from '../config/firebase';
 import { loginSchema } from '../config/schema';
-
-interface valuesTypes {
-  email: string;
-  password: string;
-}
+import { valuesTypes } from '../types/types';
 
 const initialValues: valuesTypes = {
   email: '',

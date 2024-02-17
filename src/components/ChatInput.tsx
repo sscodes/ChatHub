@@ -9,7 +9,6 @@ import {
   Snackbar,
   TextField,
 } from '@mui/material';
-import { User } from 'firebase/auth';
 import {
   Timestamp,
   arrayUnion,
@@ -28,21 +27,7 @@ import { v4 as uuid } from 'uuid';
 import { db, storage } from '../config/firebase';
 import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
-
-type userInfoType = {
-  displayName: string;
-  photoURL: string;
-  uid: string;
-};
-
-interface stateType {
-  chatId: string;
-  user: userInfoType;
-}
-
-type userType = {
-  currentUser: User | null;
-};
+import { stateType, userType } from '../types/types';
 
 const SlideTransition = (props: SlideProps) => {
   return <Slide {...props} direction='up' />;
@@ -129,8 +114,8 @@ const ChatInput = () => {
       }
     }
 
-    if (!errorOpen) {
-      await updateDoc(doc(db, 'userChats', data.user.uid), {
+    if (!errorOpen && data.user?.uid) {
+      await updateDoc(doc(db, 'userChats', data.user?.uid), {
         [data.chatId + '.lastMessage']: message.length
           ? message.substring(0, 7) + '...'
           : 'Image',

@@ -1,35 +1,12 @@
 import { Box, Grid, Typography } from '@mui/material';
-import { User } from 'firebase/auth';
-import { Timestamp, doc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import { db } from '../config/firebase';
 import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
+import { messageType, stateType, userType } from '../types/types';
 import ChatInput from './ChatInput';
 import Message from './Message';
-
-type userInfoType = {
-  displayName: string;
-  photoURL: string;
-  uid: string;
-};
-
-interface stateType {
-  chatId: string;
-  user: userInfoType;
-}
-
-interface messageType {
-  id: string;
-  text: string;
-  senderId: string;
-  date: Timestamp;
-  image?: string;
-}
-
-type userType = {
-  currentUser: User | null;
-};
 
 const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
   const [messages, setMessages] = useState<messageType[]>([]);

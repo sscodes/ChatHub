@@ -13,7 +13,9 @@ function App() {
         <Route
           path='/'
           element={
+            // @ts-ignore
             <ProtectedRoute>
+              {/* @ts-ignore */}
               <Home />
             </ProtectedRoute>
           }
@@ -21,6 +23,7 @@ function App() {
         <Route
           path='/login'
           element={
+            // @ts-ignore
             <PublicRoute>
               <Login />
             </PublicRoute>
@@ -29,6 +32,7 @@ function App() {
         <Route
           path='/register'
           element={
+            // @ts-ignore
             <PublicRoute>
               <Register />
             </PublicRoute>
@@ -37,6 +41,7 @@ function App() {
         <Route
           path='/forgot-password'
           element={
+            // @ts-ignore
             <PublicRoute>
               <ForgotPassword />
             </PublicRoute>

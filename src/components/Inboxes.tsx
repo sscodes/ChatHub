@@ -1,39 +1,18 @@
 import { Box, CircularProgress } from '@mui/material';
-import Inbox from './Inbox';
+import { doc, onSnapshot } from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
-import { Timestamp, doc, onSnapshot } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import { AuthContext } from '../context/authContext';
-import { User } from 'firebase/auth';
 import { ChatContext } from '../context/chatContext';
-
-type userInfoType = {
-  displayName: string;
-  photoURL: string;
-  uid: string;
-};
-
-type userType = {
-  currentUser: User | null;
-};
-
-type inboxType = [
-  string,
-  {
-    date: Timestamp;
-    userInfo: userInfoType;
-    lastMessage?: string;
-    blocked?: boolean;
-    blocker?: string;
-  }
-];
+import { inboxesType, userInfoType, userType } from '../types/types';
+import Inbox from './Inbox';
 
 const Inboxes = () => {
-  const [inboxesList, setInboxesList] = useState<inboxType[]>([]);
+  const [inboxesList, setInboxesList] = useState<inboxesType[]>([]);
   // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
   // @ts-ignore
-  const { dispatch } = useContext(ChatContext);  
+  const { dispatch } = useContext(ChatContext);
 
   useEffect(() => {
     const fetchData = () => {
@@ -61,19 +40,22 @@ const Inboxes = () => {
       {inboxesList?.length ? (
         inboxesList
           .sort(
-            (a: inboxType, b: inboxType) =>
+            (a: inboxesType, b: inboxesType) =>
               b[1].date?.toDate().getTime() - a[1].date?.toDate().getTime()
           )
-          .map((user: inboxType) => (
-            <Inbox
-              onClick={() => handleSelect(user[1].userInfo)}
-              image={user[1].userInfo.photoURL}
-              username={user[1].userInfo.displayName}
-              key={user[1].userInfo.uid}
-              chat={user[1].lastMessage}
-              date={user[1].date}
-            />
-          ))
+          .map(
+            (user: inboxesType) =>
+              user[1]?.userInfo?.photoURL && (
+                <Inbox
+                  onClick={() => handleSelect(user[1].userInfo)}
+                  image={user[1]?.userInfo?.photoURL}
+                  username={user[1]?.userInfo?.displayName}
+                  key={user[1]?.userInfo?.uid}
+                  chat={user[1].lastMessage}
+                  date={user[1].date}
+                />
+              )
+          )
       ) : (
         <Box display={'flex'} justifyContent={'center'} mt={2}>
           <CircularProgress color='secondary' />

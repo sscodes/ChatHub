@@ -40,14 +40,7 @@ import { Link } from 'react-router-dom';
 import Input from '../components/Input';
 import { auth, db, storage } from '../config/firebase';
 import { registerSchema } from '../config/schema';
-
-interface valuesTypes {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  file: File | null;
-}
+import { valuesTypes } from '../types/types';
 
 const initialValues: valuesTypes = {
   username: '',

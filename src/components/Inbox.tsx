@@ -1,16 +1,13 @@
 import { Avatar, Box, Grid, Typography } from '@mui/material';
-import { Timestamp } from 'firebase/firestore';
-import { MouseEventHandler } from 'react';
+import { InboxType } from '../types/types';
 
-interface InboxType {
-  image: string;
-  username: string;
-  chat?: string;
-  onClick: MouseEventHandler<HTMLDivElement> | undefined;
-  date?: Timestamp;
-}
-
-const Inbox = ({ image, username, chat = '', onClick, date }: InboxType) => {
+const Inbox = ({
+  image,
+  username,
+  chat = '',
+  onClick = () => {},
+  date,
+}: InboxType) => {
   return (
     <Box
       className='inbox'

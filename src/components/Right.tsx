@@ -1,25 +1,11 @@
-import { User } from 'firebase/auth';
 import { doc, onSnapshot } from 'firebase/firestore';
 import { useContext, useEffect, useState } from 'react';
 import { db } from '../config/firebase';
 import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
+import { stateType, userType } from '../types/types';
 import Chat from './Chat';
 import RightNavbar from './RightNavbar';
-
-type userInfoType = {
-  displayName: string;
-  photoURL: string;
-  uid: string;
-};
-interface stateType {
-  chatId: string;
-  user: userInfoType;
-}
-
-type userType = {
-  currentUser: User | null;
-};
 
 const Right = () => {
   const [blockedProp, setBlockedProp] = useState<boolean>(false);

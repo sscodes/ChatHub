@@ -1,3 +1,4 @@
+import { useTheme } from '@emotion/react';
 import {
   Avatar,
   Box,
@@ -7,37 +8,14 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { Timestamp } from 'firebase/firestore';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/authContext';
-import { User } from 'firebase/auth';
 import { ChatContext } from '../context/chatContext';
-import { useTheme } from '@emotion/react';
+import { messageType, stateType, userType } from '../types/types';
 
-interface messageType {
-  id: string;
-  text: string;
-  senderId: string;
-  date: Timestamp;
-  image?: string;
-}
 interface messagePropType {
   message: messageType;
   type: string;
-}
-
-type userType = {
-  currentUser: User | null;
-};
-
-type userInfoType = {
-  displayName: string;
-  photoURL: string;
-  uid: string;
-};
-interface stateType {
-  chatId: string;
-  user: userInfoType;
 }
 
 const Message = ({ message, type }: messagePropType) => {
@@ -75,13 +53,13 @@ const Message = ({ message, type }: messagePropType) => {
           >
             {isMediumScreen && (
               <Avatar
-                src={data.user.photoURL}
+                src={data.user?.photoURL}
                 style={{ width: 45, height: 45 }}
               />
             )}
             {isSmallScreen && (
               <Avatar
-                src={data.user.photoURL}
+                src={data.user?.photoURL}
                 style={{ width: 25, height: 25 }}
               />
             )}

@@ -1,20 +1,11 @@
-import { ReactNode, createContext, useContext, useReducer } from 'react';
-import { AuthContext, AuthContextType } from './authContext';
-
-type ContextProps = {
-  children: ReactNode;
-};
-
-type userInfoType = {
-  displayName: string;
-  photoURL: string;
-  uid: string;
-} | null;
-
-interface stateType {
-  chatId: string;
-  user: userInfoType;
-}
+import { createContext, useContext, useReducer } from 'react';
+import {
+  AuthContextType,
+  ContextProps,
+  stateType,
+  userInfoType,
+} from '../types/types';
+import { AuthContext } from './authContext';
 
 export const ChatContext = createContext<stateType | null>(null);
 

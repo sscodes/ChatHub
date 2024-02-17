@@ -1,4 +1,6 @@
+import { useTheme } from '@emotion/react';
 import BlockIcon from '@mui/icons-material/Block';
+import LogoutIcon from '@mui/icons-material/Logout';
 import {
   Alert,
   Avatar,
@@ -18,7 +20,7 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
-import { User, signOut } from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 import {
   DocumentData,
   DocumentSnapshot,
@@ -37,25 +39,7 @@ import {
 import { auth, db } from '../config/firebase';
 import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
-import { useTheme } from '@emotion/react';
-import LogoutIcon from '@mui/icons-material/Logout';
-
-type userType = {
-  currentUser: User | null;
-};
-
-type userInfoType = {
-  displayName: string;
-  photoURL: string;
-  uid: string;
-};
-
-interface stateType {
-  chatId: string;
-  user: userInfoType;
-  blocked: boolean;
-  blocker: string;
-}
+import { stateType, userType } from '../types/types';
 
 const SlideTransition = (props: SlideProps) => {
   return <Slide {...props} direction='up' />;
@@ -141,7 +125,8 @@ const RightNavbar = () => {
           [data.chatId + '.blocked']: false,
           [data.chatId + '.blocker']: '',
         });
-        await updateDoc(doc(db, 'userChats', data.user.uid), {
+        // @ts-ignore
+        await updateDoc(doc(db, 'userChats', data.user?.uid), {
           [data.chatId + '.blocked']: false,
           [data.chatId + '.blocker']: '',
         });
@@ -152,7 +137,8 @@ const RightNavbar = () => {
           [data.chatId + '.blocked']: true,
           [data.chatId + '.blocker']: currentUser?.uid || '',
         });
-        await updateDoc(doc(db, 'userChats', data.user.uid), {
+        // @ts-ignore
+        await updateDoc(doc(db, 'userChats', data.user?.uid), {
           [data.chatId + '.blocked']: true,
           [data.chatId + '.blocker']: currentUser?.uid || '',
         });

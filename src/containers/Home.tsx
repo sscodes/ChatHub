@@ -15,8 +15,7 @@ import Left from '../components/Left';
 import Right from '../components/Right';
 import { AuthContext } from '../context/authContext';
 import CloseIcon from '@mui/icons-material/Close';
-
-type Anchor = 'top';
+import { Anchor } from '../types/types';
 
 const Home = () => {
   const [loading, setLoading] = useState<boolean>(false);

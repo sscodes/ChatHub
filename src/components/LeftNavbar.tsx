@@ -1,11 +1,8 @@
 import { Avatar, Box, CircularProgress, Grid, Typography } from '@mui/material';
-import { User } from 'firebase/auth';
 import { useContext } from 'react';
 import { AuthContext } from '../context/authContext';
+import { userType } from '../types/types';
 
-type userType = {
-  currentUser: User | null;
-};
 const LeftNavbar = () => {
   // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
@@ -15,11 +12,7 @@ const LeftNavbar = () => {
       <Grid item xs={0.5} mt={0.4}></Grid>
       <Grid item xs={3.5} mt={0.4}>
         <Box display={'flex'} justifyContent={'center'}>
-          <img
-            src='src/assets/LogoLight.svg'
-            alt='logo'
-            width={95}
-          />
+          <img src='src/assets/LogoLight.svg' alt='logo' width={95} />
         </Box>
       </Grid>
 
