@@ -2,6 +2,7 @@ import { Avatar, Box, CircularProgress, Grid, Typography } from '@mui/material';
 import { useContext } from 'react';
 import { AuthContext } from '../context/authContext';
 import { userType } from '../types/types';
+import Images from '../config/images';
 
 const LeftNavbar = () => {
   // @ts-ignore
@@ -12,7 +13,7 @@ const LeftNavbar = () => {
       <Grid item xs={0.5} mt={0.4}></Grid>
       <Grid item xs={3.5} mt={0.4}>
         <Box display={'flex'} justifyContent={'center'}>
-          <img src='src/assets/LogoLight.svg' alt='logo' width={95} />
+          <img src={Images.LogoLight} alt='logo' width={95} />
         </Box>
       </Grid>
 

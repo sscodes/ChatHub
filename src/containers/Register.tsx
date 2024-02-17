@@ -41,6 +41,7 @@ import Input from '../components/Input';
 import { auth, db, storage } from '../config/firebase';
 import { registerSchema } from '../config/schema';
 import { valuesTypes } from '../types/types';
+import Images from '../config/images';
 
 const initialValues: valuesTypes = {
   username: '',
@@ -163,13 +164,13 @@ const Register = (): ReactElement => {
           <Grid container justifyContent={'center'} rowGap={5}>
             <Grid item xs={12}>
               <Box display={'flex'} justifyContent={'center'}>
-                <img src='src/assets/LogoDark.svg' alt='logo' width={200} />
+                <img src={Images.LogoDark} alt='logo' width={200} />
               </Box>
             </Grid>
             <Hidden lgDown>
               <Grid item xs={12}>
                 <Box display={'flex'} justifyContent={'center'}>
-                  <img src='src/assets/Register.svg' alt='logo' width={500} />
+                  <img src={Images.Register} alt='logo' width={500} />
                 </Box>
               </Grid>
             </Hidden>

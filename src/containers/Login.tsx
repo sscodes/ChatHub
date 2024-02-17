@@ -20,6 +20,7 @@ import Input from '../components/Input';
 import { auth } from '../config/firebase';
 import { loginSchema } from '../config/schema';
 import { valuesTypes } from '../types/types';
+import Images from '../config/images';
 
 const initialValues: valuesTypes = {
   email: '',
@@ -82,13 +83,13 @@ const Login = () => {
           <Grid container justifyContent={'center'} rowGap={5}>
             <Grid item xs={12}>
               <Box display={'flex'} justifyContent={'center'}>
-                <img src='src/assets/LogoDark.svg' alt='logo' width={200} />
+                <img src={Images.LogoDark} alt='logo' width={200} />
               </Box>
             </Grid>
             <Hidden lgDown>
               <Grid item xs={12}>
                 <Box display={'flex'} justifyContent={'center'}>
-                  <img src='src/assets/Login.svg' alt='logo' width={500} />
+                  <img src={Images.Login} alt='logo' width={500} />
                 </Box>
               </Grid>
             </Hidden>
