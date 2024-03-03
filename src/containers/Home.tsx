@@ -126,13 +126,13 @@ const Home = () => {
           </Button>
         </Box>
         <Grid container>
-          <Grid item xs={1}></Grid>
-          <Grid item xs={10}>
+          <Grid item xs={0.15}></Grid>
+          <Grid item xs={11.7}>
             <Box border={4} borderColor={'indigo'} mt={2}>
               <Right />
             </Box>
           </Grid>
-          <Grid item xs={1}></Grid>
+          <Grid item xs={0.15}></Grid>
         </Grid>
       </>
     )
