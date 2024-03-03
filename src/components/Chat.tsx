@@ -17,7 +17,7 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
 
   useEffect(() => {
     const fetchData = () => {
-      const unsub = onSnapshot(doc(db, 'chats', data?.chatId), (doc) => {
+      const unsub: any = onSnapshot(doc(db, 'chats', data?.chatId), (doc) => {
         if (doc.exists()) setMessages(doc.data().messages);
         return () => unsub();
       });
