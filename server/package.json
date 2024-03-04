@@ -1,0 +1,20 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "nodemon index.ts",
+    "build": "tsc"
+  },
+  "author": "sscodes",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.3",
+    "socket.io": "^4.7.4",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

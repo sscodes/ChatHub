@@ -1,4 +1,4 @@
-import { useTheme } from '@emotion/react';
+import { VideoCall } from '@mui/icons-material';
 import BlockIcon from '@mui/icons-material/Block';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {
@@ -17,7 +17,6 @@ import {
   SlideProps,
   Snackbar,
   Typography,
-  useMediaQuery,
 } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import { signOut } from 'firebase/auth';
@@ -60,16 +59,11 @@ const RightNavbar = () => {
   const [errorOpen, setErrorOpen] = useState<boolean>(false);
   const [logoutOpen, setLogoutOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  
   // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
   // @ts-ignore
   const { data }: { data: stateType } = useContext(ChatContext);
-
-  const theme = useTheme();
-  // @ts-ignore
-  const isSmallScreen = useMediaQuery(theme?.breakpoints.between('xs', 'sm'));
-  // @ts-ignore
-  const isMediumScreen = useMediaQuery(theme?.breakpoints.between('sm', 'xl'));
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -162,7 +156,7 @@ const RightNavbar = () => {
         height={75}
         container
       >
-        <Grid xs={8} item sm={6} lg={8} pl={2} pt={2.5}>
+        <Grid item xs={6} sm={6} lg={9} pl={2} pt={2.5}>
           <Box display={'flex'} alignContent={'center'}>
             {data?.user?.photoURL && (
               <Avatar
@@ -184,85 +178,46 @@ const RightNavbar = () => {
           </Box>
         </Grid>
         <Grid
-          xs={4}
+          xs={6}
           sm={6}
-          lg={4}
+          lg={3}
           item
           display={'flex'}
           justifyItems={'end'}
           alignItems={'center'}
           pt={0.5}
         >
-          <Grid container>
+          <Grid container alignItems={'center'} gap={1}>
+            <Grid item>
+              {data?.user?.photoURL && (
+                <a
+                  target='_blank'
+                  href={`http://localhost:5173/vc/${data.user?.displayName}/${data.chatId}`}
+                >
+                  <IconButton style={{ color: 'indigo' }} onClick={() => {}}>
+                    <VideoCall />
+                  </IconButton>
+                </a>
+              )}
+            </Grid>
             <Grid item>
               {data?.user?.photoURL &&
                 (block ? (
                   blocker && (
-                    <>
-                      {isMediumScreen && (
-                        <Button
-                          variant='contained'
-                          color='success'
-                          size='small'
-                          onClick={blockUnblockUser}
-                          style={{ marginRight: '1rem' }}
-                        >
-                          <Typography fontFamily={'Nunito Sans'}>
-                            <b>Unblock</b>
-                          </Typography>
-                        </Button>
-                      )}
-                      {isSmallScreen && (
-                        <IconButton color='success' onClick={blockUnblockUser}>
-                          <BlockIcon />
-                        </IconButton>
-                      )}
-                    </>
+                    <IconButton color='success' onClick={blockUnblockUser}>
+                      <BlockIcon />
+                    </IconButton>
                   )
                 ) : (
-                  <>
-                    {isMediumScreen && (
-                      <Button
-                        variant='contained'
-                        color='error'
-                        size='small'
-                        onClick={blockUnblockUser}
-                        style={{ marginRight: '1rem' }}
-                      >
-                        <Typography fontFamily={'Nunito Sans'}>
-                          <b>Block</b>
-                        </Typography>
-                      </Button>
-                    )}
-                    {isSmallScreen && (
-                      <IconButton color='error' onClick={blockUnblockUser}>
-                        <BlockIcon />
-                      </IconButton>
-                    )}
-                  </>
+                  <IconButton color='error' onClick={blockUnblockUser}>
+                    <BlockIcon />
+                  </IconButton>
                 ))}
             </Grid>
             <Grid item>
-              {isMediumScreen && (
-                <Button
-                  variant='contained'
-                  style={{ backgroundColor: 'indigo' }}
-                  size='small'
-                  onClick={handleClickOpen}
-                >
-                  <Typography fontFamily={'Nunito Sans'}>
-                    <b>{isMediumScreen && 'Logout'}</b>
-                  </Typography>
-                </Button>
-              )}
-              {isSmallScreen && (
-                <IconButton
-                  style={{ color: 'indigo' }}
-                  onClick={handleClickOpen}
-                >
-                  <LogoutIcon />
-                </IconButton>
-              )}
+              <IconButton style={{ color: 'indigo' }} onClick={handleClickOpen}>
+                <LogoutIcon />
+              </IconButton>
             </Grid>
           </Grid>
         </Grid>

@@ -5,6 +5,7 @@ import Login from './containers/Login';
 import Register from './containers/Register';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { PublicRoute } from './routes/PublicRoute';
+import VideoCall from './containers/VideoCall';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path='/vc/:receiver/:roomid' element={<VideoCall />} />
         <Route
           path='/login'
           element={
