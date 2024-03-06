@@ -74,7 +74,7 @@ const ChatInput = () => {
   };
 
   const encodeText = (message: string): string => {
-    return AES.encrypt(message, import.meta.env.VITE_CHAT_HUB_AES_KEY).toString();
+    return AES.encrypt(message, 'JHINGA_LA_LA_HU').toString();
   };
 
   const sendMessage = async () => {

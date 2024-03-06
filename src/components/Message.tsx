@@ -42,10 +42,7 @@ const Message = ({ message, type }: messagePropType) => {
   };
 
   const decodeMessage = (message: string): string => {
-    const byteStream = AES.decrypt(
-      message,
-      import.meta.env.VITE_CHAT_HUB_AES_KEY
-    );
+    const byteStream = AES.decrypt(message, 'JHINGA_LA_LA_HU');
     return byteStream.toString(enc.Utf8);
   };
 
