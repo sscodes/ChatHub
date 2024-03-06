@@ -7,9 +7,11 @@ import { ChatContext } from '../context/chatContext';
 import { messageType, stateType, userType } from '../types/types';
 import ChatInput from './ChatInput';
 import Message from './Message';
+import EncryptionMessage from './EncryptionMessage';
 
 const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
   const [messages, setMessages] = useState<messageType[]>([]);
+  const [chatStarted, setChatStarted] = useState<boolean>(false);
   // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
   // @ts-ignore
@@ -26,6 +28,14 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
     data?.chatId && fetchData();
   }, [data?.chatId]);
 
+  useEffect(() => {
+    if (messages.length) setChatStarted(true);
+  }, [messages]);
+
+  useEffect(() => {
+    console.log(chatStarted);
+  }, [chatStarted]);
+
   return data?.user?.displayName ? (
     <>
       <Box
@@ -35,7 +45,14 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
         style={{ overflowY: 'auto' }}
         borderRight={2}
         borderColor={'indigo'}
+        position={'relative'}
       >
+        {!chatStarted && (
+          <div style={{ display: 'flex', justifyContent: ' center' }}>
+            <EncryptionMessage />
+          </div>
+        )}
+
         <Grid container>
           {messages?.map((message) => (
             <Grid

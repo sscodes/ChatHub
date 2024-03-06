@@ -8,11 +8,11 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
+import { AES, enc } from 'crypto-js';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
 import { messageType, stateType, userType } from '../types/types';
-import { AES, enc } from 'crypto-js';
 
 interface messagePropType {
   message: messageType;
@@ -42,7 +42,10 @@ const Message = ({ message, type }: messagePropType) => {
   };
 
   const decodeMessage = (message: string): string => {
-    const byteStream = AES.decrypt(message, import.meta.env.VITE_CHAT_HUB_AES_KEY);
+    const byteStream = AES.decrypt(
+      message,
+      import.meta.env.VITE_CHAT_HUB_AES_KEY
+    );
     return byteStream.toString(enc.Utf8);
   };
 
