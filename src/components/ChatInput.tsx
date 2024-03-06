@@ -9,6 +9,7 @@ import {
   Snackbar,
   TextField,
 } from '@mui/material';
+import { AES } from 'crypto-js';
 import {
   Timestamp,
   arrayUnion,
@@ -72,6 +73,10 @@ const ChatInput = () => {
     setImageOpen(false);
   };
 
+  const encodeText = (message: string): string => {
+    return AES.encrypt(message, import.meta.env.VITE_CHAT_HUB_AES_KEY).toString();
+  };
+
   const sendMessage = async () => {
     if ((message.length > 0 || imageMessage) && currentUser?.uid) {
       if (imageMessage) {
@@ -101,7 +106,7 @@ const ChatInput = () => {
           await updateDoc(doc(db, 'chats', data.chatId), {
             messages: arrayUnion({
               id: uuid(),
-              text: message,
+              text: encodeText(message),
               senderId: currentUser?.uid,
               date: Timestamp.now(),
             }),

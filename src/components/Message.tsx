@@ -12,6 +12,7 @@ import { useContext, useState } from 'react';
 import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
 import { messageType, stateType, userType } from '../types/types';
+import { AES, enc } from 'crypto-js';
 
 interface messagePropType {
   message: messageType;
@@ -38,6 +39,11 @@ const Message = ({ message, type }: messagePropType) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const decodeMessage = (message: string): string => {
+    const byteStream = AES.decrypt(message, import.meta.env.VITE_CHAT_HUB_AES_KEY);
+    return byteStream.toString(enc.Utf8);
   };
 
   return (
@@ -77,7 +83,9 @@ const Message = ({ message, type }: messagePropType) => {
               color={type === 'user' ? 'blanchedalmond' : 'indigo'}
               p={1}
             >
-              <Typography fontFamily={'Nunito Sans'}>{message.text}</Typography>
+              <Typography fontFamily={'Nunito Sans'}>
+                {decodeMessage(message.text)}
+              </Typography>
             </Box>
           )}
           <Box>
