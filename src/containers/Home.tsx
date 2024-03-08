@@ -27,7 +27,7 @@ const Home = () => {
   // @ts-ignore
   const isSmallScreen = useMediaQuery(theme?.breakpoints.between('xs', 'md'));
   // @ts-ignore
-  const isMediumScreen = useMediaQuery(theme?.breakpoints.between('md', 'xl'));
+  // const isMediumScreen = useMediaQuery(theme?.breakpoints.between('md', 'xl'));
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -76,7 +76,7 @@ const Home = () => {
         </Box>
       </Stack>
     </Stack>
-  ) : isMediumScreen ? (
+  ) : !isSmallScreen ? (
     <Box display={'grid'} justifyContent={'center'}>
       <Grid width={'80vw'} borderRadius={3} mt={2} container>
         <Grid md={4} item>

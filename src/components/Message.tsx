@@ -31,7 +31,7 @@ const Message = ({ message, type }: messagePropType) => {
   // @ts-ignore
   const isSmallScreen = useMediaQuery(theme?.breakpoints.between('xs', 'md'));
   // @ts-ignore
-  const isMediumScreen = useMediaQuery(theme?.breakpoints.between('md', 'xl'));
+  // const isMediumScreen = useMediaQuery(theme?.breakpoints.between('md', 'xl'));
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -60,7 +60,7 @@ const Message = ({ message, type }: messagePropType) => {
             alignItems={'center'}
             justifyContent={'center'}
           >
-            {isMediumScreen && (
+            {!isSmallScreen && (
               <Avatar
                 src={data.user?.photoURL}
                 style={{ width: 45, height: 45 }}
@@ -119,7 +119,7 @@ const Message = ({ message, type }: messagePropType) => {
             alignItems={'center'}
             justifyContent={'center'}
           >
-            {isMediumScreen && (
+            {!isSmallScreen && (
               <Avatar
                 src={currentUser?.photoURL + ''}
                 style={{ width: 45, height: 45 }}

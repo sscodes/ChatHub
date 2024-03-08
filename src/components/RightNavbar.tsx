@@ -69,7 +69,7 @@ const RightNavbar = () => {
   // @ts-ignore
   const isSmallScreen = useMediaQuery(theme?.breakpoints.between('xs', 'sm'));
   // @ts-ignore
-  const isMediumScreen = useMediaQuery(theme?.breakpoints.between('sm', 'xl'));
+  // const isMediumScreen = useMediaQuery(theme?.breakpoints.between('sm', 'xl'));
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -199,7 +199,7 @@ const RightNavbar = () => {
                 (block ? (
                   blocker && (
                     <>
-                      {isMediumScreen && (
+                      {!isSmallScreen && (
                         <Button
                           variant='contained'
                           color='success'
@@ -221,7 +221,7 @@ const RightNavbar = () => {
                   )
                 ) : (
                   <>
-                    {isMediumScreen && (
+                    {!isSmallScreen && (
                       <Button
                         variant='contained'
                         color='error'
@@ -243,7 +243,7 @@ const RightNavbar = () => {
                 ))}
             </Grid>
             <Grid item>
-              {isMediumScreen && (
+              {!isSmallScreen && (
                 <Button
                   variant='contained'
                   style={{ backgroundColor: 'indigo' }}
@@ -251,7 +251,7 @@ const RightNavbar = () => {
                   onClick={handleClickOpen}
                 >
                   <Typography fontFamily={'Nunito Sans'}>
-                    <b>{isMediumScreen && 'Logout'}</b>
+                    <b>{!isSmallScreen && 'Logout'}</b>
                   </Typography>
                 </Button>
               )}
