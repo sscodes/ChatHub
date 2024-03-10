@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { AES, enc } from 'crypto-js';
 import { useContext, useState } from 'react';
+import { popularTLDs } from '../config/constants';
 import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
 import { messageType, stateType, userType } from '../types/types';
@@ -41,12 +42,24 @@ const Message = ({ message, type }: messagePropType) => {
     setOpen(false);
   };
 
+  const checkForLinks = (msg: string): string => {
+    let arrStr = msg.split(' ');
+    for (let substr of arrStr) {
+      for (let tld of popularTLDs) {
+        if (substr.includes(tld)) {
+          arrStr[
+            arrStr.indexOf(substr)
+          ] = `<a target='_blank' href='https://${substr}'>${substr}</a>`;
+          break;
+        }
+      }
+    }
+    return arrStr.join(' ');
+  };
+
   const decodeMessage = (message: string): string => {
-    const byteStream = AES.decrypt(
-      message,
-      import.meta.env.VITE_CHAT_HUB_AES_KEY
-    );
-    return byteStream.toString(enc.Utf8);
+    const byteStream = AES.decrypt(message, import.meta.env.VITE_CHAT_HUB_AES_KEY);
+    return checkForLinks(byteStream.toString(enc.Utf8));
   };
 
   return (
@@ -87,7 +100,22 @@ const Message = ({ message, type }: messagePropType) => {
               p={1}
             >
               <Typography fontFamily={'Nunito Sans'}>
-                {decodeMessage(message.text)}
+                {decodeMessage(message.text)
+                  .split(/(<a.*?>.*?<\/a>)/)
+                  .map((segment, index) => {
+                    if (segment.startsWith('<a')) {
+                      // If the segment is a link, render it as JSX without escaping
+                      return (
+                        <span
+                          key={index}
+                          dangerouslySetInnerHTML={{ __html: segment }}
+                        />
+                      );
+                    } else {
+                      // If the segment is plain text, render it as a text node
+                      return <span key={index}>{segment}</span>;
+                    }
+                  })}
               </Typography>
             </Box>
           )}

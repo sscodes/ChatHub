@@ -33,3 +33,7 @@ body {
   transition: 200ms;
   color: indigo;
 }
+
+a {
+  color: white;
+}
