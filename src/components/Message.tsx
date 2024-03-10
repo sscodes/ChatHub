@@ -102,20 +102,16 @@ const Message = ({ message, type }: messagePropType) => {
               <Typography fontFamily={'Nunito Sans'}>
                 {decodeMessage(message.text)
                   .split(/(<a.*?>.*?<\/a>)/)
-                  .map((segment, index) => {
-                    if (segment.startsWith('<a')) {
-                      // If the segment is a link, render it as JSX without escaping
-                      return (
-                        <span
-                          key={index}
-                          dangerouslySetInnerHTML={{ __html: segment }}
-                        />
-                      );
-                    } else {
-                      // If the segment is plain text, render it as a text node
-                      return <span key={index}>{segment}</span>;
-                    }
-                  })}
+                  .map((segment, index) =>
+                    segment.startsWith('<a') ? (
+                      <span
+                        key={index}
+                        dangerouslySetInnerHTML={{ __html: segment }}
+                      />
+                    ) : (
+                      <span key={index}>{segment}</span>
+                    )
+                  )}
               </Typography>
             </Box>
           )}
