@@ -30,11 +30,8 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
 
   useEffect(() => {
     if (messages.length) setChatStarted(true);
+    else setChatStarted(false);
   }, [messages]);
-
-  useEffect(() => {
-    console.log(chatStarted);
-  }, [chatStarted]);
 
   return data?.user?.displayName ? (
     <>
