@@ -8,10 +8,12 @@ import { messageType, stateType, userType } from '../types/types';
 import ChatInput from './ChatInput';
 import Message from './Message';
 import EncryptionMessage from './EncryptionMessage';
+import ReactionPanel from './ReactionPanel';
 
 const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
   const [messages, setMessages] = useState<messageType[]>([]);
   const [chatStarted, setChatStarted] = useState<boolean>(false);
+  const [clickMessage, setClickMessage] = useState<string>('');
   // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
   // @ts-ignore
@@ -71,10 +73,25 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
                   type={
                     message.senderId === currentUser?.uid ? 'user' : 'friend'
                   }
+                  setClickMessage={setClickMessage}
                 />
               </Grid>
               {!(message.senderId === currentUser?.uid) && (
-                <Grid item xs={6}></Grid>
+                <Grid
+                  item
+                  xs={6}
+                  display={'flex'}
+                  alignItems={'start'}
+                  pl={1}
+                >
+                  {clickMessage === message.id && (
+                    <ReactionPanel
+                      message={message}
+                      messages={messages}
+                      setClickMessage={setClickMessage}
+                    />
+                  )}
+                </Grid>
               )}
             </Grid>
           ))}

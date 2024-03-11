@@ -9,18 +9,20 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { AES, enc } from 'crypto-js';
-import { useContext, useState } from 'react';
+import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { popularTLDs } from '../config/constants';
 import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
 import { messageType, stateType, userType } from '../types/types';
+import AddIcon from '@mui/icons-material/Add';
 
 interface messagePropType {
   message: messageType;
   type: string;
+  setClickMessage: Dispatch<SetStateAction<string>>;
 }
 
-const Message = ({ message, type }: messagePropType) => {
+const Message = ({ message, type, setClickMessage }: messagePropType) => {
   const [open, setOpen] = useState<boolean>(false);
   const [imageLoading, setImageLoading] = useState<boolean>(true);
   // @ts-ignore
@@ -64,7 +66,7 @@ const Message = ({ message, type }: messagePropType) => {
 
   return (
     <>
-      <Grid container>
+      <Grid container style={{ cursor: 'pointer' }}>
         {type === 'friend' && (
           <Grid
             item
@@ -98,6 +100,7 @@ const Message = ({ message, type }: messagePropType) => {
               bgcolor={type === 'user' ? 'indigo' : 'rgb(178, 182, 255)'}
               color={type === 'user' ? 'blanchedalmond' : 'indigo'}
               p={1}
+              position={'relative'}
             >
               <Typography fontFamily={'Nunito Sans'}>
                 {decodeMessage(message.text)
@@ -113,6 +116,36 @@ const Message = ({ message, type }: messagePropType) => {
                     )
                   )}
               </Typography>
+              {message.reaction?.length > 0 ? (
+                <Box position={'absolute'} bottom={-10} right={0}>
+                  <Typography
+                    style={{
+                      fontSize: '1.4rem',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{ __html: message.reaction }}
+                      onClick={() => setClickMessage(message.id)}
+                    />
+                  </Typography>
+                </Box>
+              ) : (
+                message.senderId !== currentUser?.uid && (
+                  <Box position={'absolute'} bottom={-10} right={0}>
+                    <AddIcon
+                      style={{
+                        fontSize: '1.4rem',
+                        backgroundColor: 'gray',
+                        color: 'white',
+                        borderRadius: '50%',
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => setClickMessage(message.id)}
+                    />
+                  </Box>
+                )
+              )}
             </Box>
           )}
           <Box>
@@ -160,7 +193,7 @@ const Message = ({ message, type }: messagePropType) => {
       </Grid>
       <Box textAlign={'center'}>
         <Typography
-          variant='subtitle2'
+          style={{ fontSize: '0.74rem' }}
           color={'indigo'}
           fontFamily={'Nunito Sans'}
         >

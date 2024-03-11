@@ -94,6 +94,7 @@ const ChatInput = () => {
                 senderId: currentUser?.uid,
                 date: Timestamp.now(),
                 image: downloadURL,
+                reaction: '',
               }),
             });
           })
@@ -109,6 +110,7 @@ const ChatInput = () => {
               text: encodeText(message),
               senderId: currentUser?.uid,
               date: Timestamp.now(),
+              reaction: '',
             }),
           });
         } catch (error) {

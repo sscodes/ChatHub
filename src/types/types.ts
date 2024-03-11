@@ -44,6 +44,7 @@ export type messageType = {
   senderId: string;
   date: Timestamp;
   image?: string;
+  reaction: string;
 };
 
 export type userType = {
