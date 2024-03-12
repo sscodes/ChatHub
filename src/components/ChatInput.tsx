@@ -41,6 +41,7 @@ const ChatInput = () => {
   const [errorOpen, setErrorOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const [imageMessage, setImageMessage] = useState<File | null | undefined>();
+  const [chatInputFocus, setChatInputFocus] = useState<boolean>(false);
 
   // @ts-ignore
   const { data }: { data: stateType } = useContext(ChatContext);
@@ -142,9 +143,23 @@ const ChatInput = () => {
     setErrorOpen(false);
   };
 
+  useEffect(() => {
+    const handleEnterPressMessageSend = (event: any) => {
+      if (event.key === 'Enter' && chatInputFocus && message.length > 0)
+        sendMessage();
+    };
+    document.addEventListener('keydown', handleEnterPressMessageSend);
+
+    return () => {
+      document.removeEventListener('keydown', handleEnterPressMessageSend);
+    };
+  }, [chatInputFocus, message]);
+
   return (
     <Box borderBottom={2} borderRight={2} borderColor={'indigo'}>
       <TextField
+        onFocus={() => setChatInputFocus(true)}
+        onBlur={() => setChatInputFocus(false)}
         label={'Type your message...'}
         variant={'filled'}
         color={'secondary'}
