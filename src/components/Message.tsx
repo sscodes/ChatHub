@@ -15,6 +15,7 @@ import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
 import { messageType, stateType, userType } from '../types/types';
 import AddIcon from '@mui/icons-material/Add';
+import { ThemeContext } from '../context/themeContext';
 
 interface messagePropType {
   message: messageType;
@@ -29,12 +30,12 @@ const Message = ({ message, type, setClickMessage }: messagePropType) => {
   const { currentUser }: userType = useContext(AuthContext);
   // @ts-ignore
   const { data }: { data: stateType } = useContext(ChatContext);
+  // @ts-ignore
+  const { theme } = useContext(ThemeContext);
 
-  const theme = useTheme();
+  const themeMUI = useTheme();
   // @ts-ignore
-  const isSmallScreen = useMediaQuery(theme?.breakpoints.between('xs', 'md'));
-  // @ts-ignore
-  // const isMediumScreen = useMediaQuery(theme?.breakpoints.between('md', 'xl'));
+  const isSmallScreen = useMediaQuery(themeMUI?.breakpoints.between('xs', 'md'));
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -123,12 +124,9 @@ const Message = ({ message, type, setClickMessage }: messagePropType) => {
                       fontSize: '1.4rem',
                       cursor: 'pointer',
                     }}
-                  >
-                    <div
-                      dangerouslySetInnerHTML={{ __html: message.reaction }}
-                      onClick={() => setClickMessage(message.id)}
-                    />
-                  </Typography>
+                    dangerouslySetInnerHTML={{ __html: message.reaction }}
+                    onClick={() => setClickMessage(message.id)}
+                  />
                 </Box>
               ) : (
                 message.senderId !== currentUser?.uid && (
@@ -194,7 +192,7 @@ const Message = ({ message, type, setClickMessage }: messagePropType) => {
       <Box textAlign={'center'}>
         <Typography
           style={{ fontSize: '0.74rem' }}
-          color={'indigo'}
+          className={`${theme === 'light' ? 'colour-dark' : 'colour-light'}`}
           fontFamily={'Nunito Sans'}
         >
           {`${message.date.toDate().toLocaleDateString('en-IN')}`}

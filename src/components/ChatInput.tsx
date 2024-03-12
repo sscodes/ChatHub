@@ -162,7 +162,7 @@ const ChatInput = () => {
         onBlur={() => setChatInputFocus(false)}
         label={'Type your message...'}
         variant={'filled'}
-        color={'secondary'}
+        className='color-secondary'
         style={{
           backgroundColor: 'rgb(178, 182, 255)',
           display: 'flex',

@@ -1,4 +1,5 @@
 import { useTheme } from '@emotion/react';
+import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
 import {
   Box,
@@ -14,8 +15,8 @@ import { useContext, useEffect, useState } from 'react';
 import Left from '../components/Left';
 import Right from '../components/Right';
 import { AuthContext } from '../context/authContext';
-import CloseIcon from '@mui/icons-material/Close';
 import { Anchor } from '../types/types';
+import { ThemeContext } from '../context/themeContext';
 
 const Home = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,11 +24,14 @@ const Home = () => {
     top: false,
   });
 
-  const theme = useTheme();
+  const themeMUI = useTheme();
+  const isSmallScreen = useMediaQuery(
+    // @ts-ignore
+    themeMUI?.breakpoints.between('xs', 'md')
+  );
+
   // @ts-ignore
-  const isSmallScreen = useMediaQuery(theme?.breakpoints.between('xs', 'md'));
-  // @ts-ignore
-  // const isMediumScreen = useMediaQuery(theme?.breakpoints.between('md', 'xl'));
+  const { theme } = useContext(ThemeContext);
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -64,7 +68,7 @@ const Home = () => {
     >
       <Stack gap={5}>
         <Typography
-          color={'indigo'}
+          className={`${theme === 'light' ? 'colour-dark' : 'colour-light'}`}
           variant='h4'
           fontFamily={'Nunito Sans'}
           fontWeight={700}
@@ -72,7 +76,9 @@ const Home = () => {
           Please wait while we get your account ready!
         </Typography>
         <Box display={'flex'} justifyContent={'center'}>
-          <CircularProgress color='secondary' />
+          <CircularProgress
+            className={`${theme === 'light' ? 'colour-dark' : 'colour-light'}`}
+          />
         </Box>
       </Stack>
     </Stack>

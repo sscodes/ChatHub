@@ -40,6 +40,9 @@ import { auth, db } from '../config/firebase';
 import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
 import { stateType, userType } from '../types/types';
+import LightModeIcon from '@mui/icons-material/LightMode';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import { ThemeContext } from '../context/themeContext';
 
 const SlideTransition = (props: SlideProps) => {
   return <Slide {...props} direction='up' />;
@@ -60,16 +63,29 @@ const RightNavbar = () => {
   const [errorOpen, setErrorOpen] = useState<boolean>(false);
   const [logoutOpen, setLogoutOpen] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+
   // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
   // @ts-ignore
   const { data }: { data: stateType } = useContext(ChatContext);
+  // @ts-ignore
+  const { theme, setTheme } = useContext(ThemeContext);
 
-  const theme = useTheme();
-  // @ts-ignore
-  const isSmallScreen = useMediaQuery(theme?.breakpoints.between('xs', 'sm'));
-  // @ts-ignore
-  // const isMediumScreen = useMediaQuery(theme?.breakpoints.between('sm', 'xl'));
+  const themeMUI = useTheme();
+  const isSmallScreen = useMediaQuery(
+    // @ts-ignore
+    themeMUI?.breakpoints.between('xs', 'sm')
+  );
+
+  const handleThemeChange = () => {
+    if (theme === 'light') {
+      localStorage.setItem('theme', 'dark');
+      setTheme('dark');
+    } else {
+      localStorage.setItem('theme', 'light');
+      setTheme('light');
+    }
+  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -162,7 +178,7 @@ const RightNavbar = () => {
         height={75}
         container
       >
-        <Grid xs={8} item sm={6} lg={8} pl={2} pt={2.5}>
+        <Grid item xs={6} sm={6} lg={7} pl={2} pt={2.5}>
           <Box display={'flex'} alignContent={'center'}>
             {data?.user?.photoURL && (
               <Avatar
@@ -184,9 +200,9 @@ const RightNavbar = () => {
           </Box>
         </Grid>
         <Grid
-          xs={4}
+          xs={6}
           sm={6}
-          lg={4}
+          lg={5}
           item
           display={'flex'}
           justifyItems={'end'}
@@ -194,7 +210,13 @@ const RightNavbar = () => {
           pt={0.5}
         >
           <Grid container>
-            <Grid item>
+            <Grid
+              item
+              sm={5}
+              display={'flex'}
+              alignItems={'center'}
+              justifyContent={'end'}
+            >
               {data?.user?.photoURL &&
                 (block ? (
                   blocker && (
@@ -242,7 +264,13 @@ const RightNavbar = () => {
                   </>
                 ))}
             </Grid>
-            <Grid item>
+            <Grid
+              item
+              sm={4}
+              display={'flex'}
+              alignItems={'center'}
+              justifyContent={'center'}
+            >
               {!isSmallScreen && (
                 <Button
                   variant='contained'
@@ -263,6 +291,20 @@ const RightNavbar = () => {
                   <LogoutIcon />
                 </IconButton>
               )}
+            </Grid>
+            <Grid
+              item
+              sm={2}
+              display={'flex'}
+              alignItems={'center'}
+              style={{ paddingLeft: isSmallScreen ? '0rem' : '0.5rem' }}
+            >
+              <IconButton
+                style={{ color: 'indigo' }}
+                onClick={handleThemeChange}
+              >
+                {theme !== 'light' ? <LightModeIcon /> : <DarkModeIcon />}
+              </IconButton>
             </Grid>
           </Grid>
         </Grid>

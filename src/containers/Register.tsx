@@ -35,13 +35,14 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { useFormik } from 'formik';
-import { ReactElement, useState } from 'react';
+import { ReactElement, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../components/Input';
 import { auth, db, storage } from '../config/firebase';
 import { registerSchema } from '../config/schema';
 import { valuesTypes } from '../types/types';
 import Images from '../config/images';
+import { ThemeContext } from '../context/themeContext';
 
 const initialValues: valuesTypes = {
   username: '',
@@ -62,6 +63,9 @@ const Register = (): ReactElement => {
   const [passwordField, setPasswordField] = useState<string>('password');
   const [confirmPasswordField, setConfirmPasswordField] =
     useState<string>('password');
+
+  // @ts-ignore
+  const { theme } = useContext(ThemeContext);
 
   const handleClose = (
     _event: React.SyntheticEvent | Event,
@@ -164,7 +168,11 @@ const Register = (): ReactElement => {
           <Grid container justifyContent={'center'} rowGap={5}>
             <Grid item xs={12}>
               <Box display={'flex'} justifyContent={'center'}>
-                <img src={Images.LogoDark} alt='logo' width={200} />
+                {theme === 'light' ? (
+                  <img src={Images.LogoDark} alt='logo' width={200} />
+                ) : (
+                  <img src={Images.LogoLight} alt='logo' width={200} />
+                )}
               </Box>
             </Grid>
             <Hidden lgDown>

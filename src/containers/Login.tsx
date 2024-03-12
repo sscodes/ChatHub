@@ -10,17 +10,18 @@ import {
   SlideProps,
   Snackbar,
   Stack,
-  Typography
+  Typography,
 } from '@mui/material';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 import { auth } from '../config/firebase';
 import { loginSchema } from '../config/schema';
 import { valuesTypes } from '../types/types';
 import Images from '../config/images';
+import { ThemeContext } from '../context/themeContext';
 
 const initialValues: valuesTypes = {
   email: '',
@@ -37,6 +38,9 @@ const Login = () => {
   const [passwordField, setPasswordField] = useState<string>('password');
 
   const navigate = useNavigate();
+
+  // @ts-ignore
+  const { theme } = useContext(ThemeContext);
 
   const handleClose = (
     _event: React.SyntheticEvent | Event,
@@ -83,7 +87,11 @@ const Login = () => {
           <Grid container justifyContent={'center'} rowGap={5}>
             <Grid item xs={12}>
               <Box display={'flex'} justifyContent={'center'}>
-                <img src={Images.LogoDark} alt='logo' width={200} />
+                {theme === 'light' ? (
+                  <img src={Images.LogoDark} alt='logo' width={200} />
+                ) : (
+                  <img src={Images.LogoLight} alt='logo' width={200} />
+                )}
               </Box>
             </Grid>
             <Hidden lgDown>

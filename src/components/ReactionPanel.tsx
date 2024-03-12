@@ -57,9 +57,11 @@ const ReactionPanel = ({
     >
       {emojiList.map((e) => (
         <Grid item xs={2} display={'flex'} justifyContent={'center'} key={e}>
-          <Typography className='emoji' onClick={() => changeEmoji(e)}>
-            <div dangerouslySetInnerHTML={{ __html: e }} />
-          </Typography>
+          <Typography
+            className='emoji'
+            onClick={() => changeEmoji(e)}
+            dangerouslySetInnerHTML={{ __html: e }}
+          />
         </Grid>
       ))}
       <Box position={'absolute'} top={-4} right={0}>

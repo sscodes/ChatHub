@@ -10,11 +10,12 @@ import {
   Typography,
 } from '@mui/material';
 import { sendPasswordResetEmail } from 'firebase/auth';
-import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../components/Input';
 import { auth } from '../config/firebase';
 import Images from '../config/images';
+import { ThemeContext } from '../context/themeContext';
 
 const SlideTransition = (props: SlideProps) => {
   return <Slide {...props} direction='up' />;
@@ -27,6 +28,9 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState<string>('');
 
   const navigate = useNavigate();
+
+  // @ts-ignore
+  const { theme } = useContext(ThemeContext);
 
   const handleSuccessClose = (
     _event: SyntheticEvent | Event,
@@ -67,7 +71,11 @@ const ForgotPassword = () => {
   return (
     <>
       <Box display={'flex'} justifyContent={'center'} mt={2}>
-        <img src={Images.LogoDark} alt='logo' width={150} />
+        {theme === 'light' ? (
+          <img src={Images.LogoDark} alt='logo' width={150} />
+        ) : (
+          <img src={Images.LogoLight} alt='logo' width={150} />
+        )}
       </Box>
       <Grid
         container

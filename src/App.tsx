@@ -5,8 +5,23 @@ import Login from './containers/Login';
 import Register from './containers/Register';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { PublicRoute } from './routes/PublicRoute';
+import { useContext, useEffect } from 'react';
+import { ThemeContext } from './context/themeContext';
 
 function App() {
+  // @ts-ignore
+  const { theme, setTheme } = useContext(ThemeContext);
+
+  useEffect(() => {
+    if (theme === 'light') {
+      document.body.classList.add('light-theme-bg');
+      document.body.classList.remove('dark-theme-bg');
+    } else {
+      document.body.classList.add('dark-theme-bg');
+      document.body.classList.remove('light-theme-bg');
+    }
+  }, [theme]);
+
   return (
     <>
       <Routes>

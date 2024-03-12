@@ -1,5 +1,17 @@
-body {
+.light-theme-bg {
   background-color: blanchedalmond;
+}
+
+.dark-theme-bg {
+  background-color: rgb(16, 0, 27);
+}
+
+.colour-dark {
+  color: indigo !important;
+}
+
+.colour-light {
+  color: blanchedalmond !important;
 }
 
 /* width */
@@ -42,7 +54,7 @@ a {
   cursor: pointer;
 }
 
-.emoji:hover{
+.emoji:hover {
   font-size: 1.5rem;
   transition: all ease-in-out 0.24s;
 }

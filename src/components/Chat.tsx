@@ -9,15 +9,19 @@ import ChatInput from './ChatInput';
 import Message from './Message';
 import EncryptionMessage from './EncryptionMessage';
 import ReactionPanel from './ReactionPanel';
+import { ThemeContext } from '../context/themeContext';
 
 const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
   const [messages, setMessages] = useState<messageType[]>([]);
   const [chatStarted, setChatStarted] = useState<boolean>(false);
   const [clickMessage, setClickMessage] = useState<string>('');
+
   // @ts-ignore
   const { currentUser }: userType = useContext(AuthContext);
   // @ts-ignore
   const { data }: { data: stateType } = useContext(ChatContext);
+  // @ts-ignore
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const fetchData = () => {
@@ -130,7 +134,7 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
         <Box textAlign={'center'}>
           <Typography
             variant='h2'
-            color={'indigo'}
+            className={`${theme === 'light' ? 'colour-dark' : 'colour-light'}`}
             fontFamily={'Nunito Sans'}
             fontWeight={700}
           >
@@ -138,7 +142,7 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
           </Typography>
           <Typography
             variant='h4'
-            color={'indigo'}
+            className={`${theme === 'light' ? 'colour-dark' : 'colour-light'}`}
             fontFamily={'Nunito Sans'}
             fontWeight={700}
           >
