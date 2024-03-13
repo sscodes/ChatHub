@@ -77,17 +77,12 @@ const Chat = ({ blockedProp }: { blockedProp: boolean }) => {
                   type={
                     message.senderId === currentUser?.uid ? 'user' : 'friend'
                   }
+                  clickMessage={clickMessage}
                   setClickMessage={setClickMessage}
                 />
               </Grid>
               {!(message.senderId === currentUser?.uid) && (
-                <Grid
-                  item
-                  xs={6}
-                  display={'flex'}
-                  alignItems={'start'}
-                  pl={1}
-                >
+                <Grid item xs={6} display={'flex'} alignItems={'start'} pl={1}>
                   {clickMessage === message.id && (
                     <ReactionPanel
                       message={message}

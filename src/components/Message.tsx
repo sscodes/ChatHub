@@ -1,4 +1,6 @@
 import { useTheme } from '@emotion/react';
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
 import {
   Avatar,
   Box,
@@ -13,17 +15,22 @@ import { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { popularTLDs } from '../config/constants';
 import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
-import { messageType, stateType, userType } from '../types/types';
-import AddIcon from '@mui/icons-material/Add';
 import { ThemeContext } from '../context/themeContext';
+import { messageType, stateType, userType } from '../types/types';
 
 interface messagePropType {
   message: messageType;
   type: string;
+  clickMessage: string;
   setClickMessage: Dispatch<SetStateAction<string>>;
 }
 
-const Message = ({ message, type, setClickMessage }: messagePropType) => {
+const Message = ({
+  message,
+  type,
+  setClickMessage,
+  clickMessage,
+}: messagePropType) => {
   const [open, setOpen] = useState<boolean>(false);
   const [imageLoading, setImageLoading] = useState<boolean>(true);
   // @ts-ignore
@@ -34,8 +41,10 @@ const Message = ({ message, type, setClickMessage }: messagePropType) => {
   const { theme } = useContext(ThemeContext);
 
   const themeMUI = useTheme();
-  // @ts-ignore
-  const isSmallScreen = useMediaQuery(themeMUI?.breakpoints.between('xs', 'md'));
+  const isSmallScreen = useMediaQuery(
+    // @ts-ignore
+    themeMUI?.breakpoints.between('xs', 'md')
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -131,16 +140,31 @@ const Message = ({ message, type, setClickMessage }: messagePropType) => {
               ) : (
                 message.senderId !== currentUser?.uid && (
                   <Box position={'absolute'} bottom={-10} right={0}>
-                    <AddIcon
-                      style={{
-                        fontSize: '1.4rem',
-                        backgroundColor: 'gray',
-                        color: 'white',
-                        borderRadius: '50%',
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => setClickMessage(message.id)}
-                    />
+                    {clickMessage.length === 0 || clickMessage !== message.id ? (
+                      <AddIcon
+                        style={{
+                          fontSize: '1rem',
+                          backgroundColor: 'gray',
+                          color: 'white',
+                          borderRadius: '50%',
+                          cursor: 'pointer',
+                        }}
+                        onClick={() => setClickMessage(message.id)}
+                      />
+                    ) : (
+                      clickMessage === message.id && (
+                        <CloseIcon
+                          style={{
+                            fontSize: '1rem',
+                            backgroundColor: 'gray',
+                            color: 'white',
+                            borderRadius: '50%',
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => setClickMessage('')}
+                        />
+                      )
+                    )}
                   </Box>
                 )
               )}
