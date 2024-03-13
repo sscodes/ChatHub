@@ -1,12 +1,9 @@
+import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../context/authContext';
-import { ReactNode, useContext } from 'react';
+import { ChildrenProps } from '../types/types';
 
-type ContextProps = {
-  children: ReactNode;
-};
-
-export const PublicRoute = ({ children }: ContextProps) => {
+export const PublicRoute = ({ children }: ChildrenProps) => {
   // @ts-ignore
   const { currentUser } = useContext(AuthContext);
   if (currentUser) {

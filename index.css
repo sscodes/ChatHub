@@ -2,6 +2,10 @@
   background-color: blanchedalmond;
 }
 
+.username-basic {
+  color: blanchedalmond;
+}
+
 .dark-theme-bg {
   background-color: rgb(16, 0, 27);
 }
@@ -57,4 +61,15 @@ a {
 .emoji:hover {
   font-size: 1.5rem;
   transition: all ease-in-out 0.24s;
+}
+
+.changeDP {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.477);
+  z-index: 100;
+  position: absolute;
+  cursor: pointer;
 }

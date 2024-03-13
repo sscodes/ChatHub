@@ -21,7 +21,7 @@ export type AuthContextType = {
   currentUser: User | null;
 };
 
-export type ContextProps = {
+export type ChildrenProps = {
   children: ReactNode;
 };
 
@@ -88,4 +88,5 @@ export type InputPropTypes = {
     | Partial<InputProps>
     | undefined;
   forgotPassword?: boolean;
+  refProp?: any;
 };

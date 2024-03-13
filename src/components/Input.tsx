@@ -1,5 +1,5 @@
 import { TextField, Typography } from '@mui/material';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { InputPropTypes } from '../types/types';
 
@@ -14,11 +14,20 @@ const Input = ({
   helperText = null,
   InputProps,
   forgotPassword = false,
+  refProp = () => {},
 }: InputPropTypes): ReactElement => {
   const navigate = useNavigate();
   const toForgotPassword = () => {
     navigate('/forgot-password');
   };
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    // @ts-ignore
+    refProp(inputRef?.current?.querySelector('div input'));
+  }, [refProp]);
+
   return (
     <div>
       <TextField
@@ -36,6 +45,7 @@ const Input = ({
         error={error}
         helperText={helperText}
         InputProps={InputProps}
+        ref={inputRef}
       />
       {forgotPassword && (
         <Typography

@@ -91,7 +91,6 @@ const Register = (): ReactElement => {
       const storageRef = ref(storage, values.username);
       if (values.file) {
         const uploadTask = uploadBytesResumable(storageRef, values.file);
-        // setWaitMessage('Please wait a while for the image to get sent.');
 
         uploadTask
           .then(async (snapshot: UploadTaskSnapshot) => {

@@ -1,12 +1,13 @@
 import { useTheme } from '@emotion/react';
 import BlockIcon from '@mui/icons-material/Block';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {
   Alert,
   Avatar,
   Box,
   Button,
-  Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
@@ -19,7 +20,6 @@ import {
   Typography,
   useMediaQuery,
 } from '@mui/material';
-import { TransitionProps } from '@mui/material/transitions';
 import { signOut } from 'firebase/auth';
 import {
   DocumentData,
@@ -28,34 +28,17 @@ import {
   getDoc,
   updateDoc,
 } from 'firebase/firestore';
-import {
-  ReactElement,
-  Ref,
-  forwardRef,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { useContext, useEffect, useState } from 'react';
+import Modals from '../HOC/Modals';
 import { auth, db } from '../config/firebase';
 import { AuthContext } from '../context/authContext';
 import { ChatContext } from '../context/chatContext';
-import { stateType, userType } from '../types/types';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { ThemeContext } from '../context/themeContext';
+import { stateType, userType } from '../types/types';
 
 const SlideTransition = (props: SlideProps) => {
   return <Slide {...props} direction='up' />;
 };
-
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    children: ReactElement<any, any>;
-  },
-  ref: Ref<unknown>
-) {
-  return <Slide direction='up' ref={ref} {...props} />;
-});
 
 const RightNavbar = () => {
   const [block, setBlock] = useState<boolean>(false);
@@ -309,52 +292,45 @@ const RightNavbar = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Dialog
-        open={logoutOpen}
-        TransitionComponent={Transition}
-        keepMounted
-        aria-describedby='alert-dialog-slide-description'
-      >
-        <Box style={{ backgroundColor: 'indigo' }}>
-          <DialogTitle
+      <Modals open={logoutOpen}>
+        <DialogTitle
+          color={'blanchedalmond'}
+          fontFamily={'Nunito Sans'}
+          fontWeight={400}
+        >
+          Sign out, already?
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText
+            id='alert-dialog-slide-description'
             color={'blanchedalmond'}
             fontFamily={'Nunito Sans'}
             fontWeight={400}
           >
-            Sign out, already?
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText
-              id='alert-dialog-slide-description'
-              color={'blanchedalmond'}
-              fontFamily={'Nunito Sans'}
-              fontWeight={400}
-            >
-              Are you sure, you want to sign out?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={handleLogoutClose}
-              variant='contained'
-              style={{ backgroundColor: 'blanchedalmond', color: 'indigo' }}
-            >
-              <Typography fontFamily={'Nunito Sans'} fontWeight={400}>
-                No
-              </Typography>
-            </Button>
-            <Button
-              onClick={() => signOut(auth)}
-              variant='outlined'
-              style={{ borderColor: 'blanchedalmond', color: 'blanchedalmond' }}
-            >
-              <Typography fontFamily={'Nunito Sans'} fontWeight={400}>
-                Yes
-              </Typography>
-            </Button>
-          </DialogActions>
-        </Box>
-      </Dialog>
+            Are you sure, you want to sign out?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleLogoutClose}
+            variant='contained'
+            style={{ backgroundColor: 'blanchedalmond', color: 'indigo' }}
+          >
+            <Typography fontFamily={'Nunito Sans'} fontWeight={400}>
+              No
+            </Typography>
+          </Button>
+          <Button
+            onClick={() => signOut(auth)}
+            variant='outlined'
+            style={{ borderColor: 'blanchedalmond', color: 'blanchedalmond' }}
+          >
+            <Typography fontFamily={'Nunito Sans'} fontWeight={400}>
+              Yes
+            </Typography>
+          </Button>
+        </DialogActions>
+      </Modals>
       <Snackbar
         open={errorOpen}
         autoHideDuration={5000}

@@ -1,7 +1,7 @@
 import { createContext, useContext, useReducer } from 'react';
 import {
   AuthContextType,
-  ContextProps,
+  ChildrenProps,
   stateType,
   userInfoType,
 } from '../types/types';
@@ -9,7 +9,7 @@ import { AuthContext } from './authContext';
 
 export const ChatContext = createContext<stateType | null>(null);
 
-export const ChatContextProvider = ({ children }: ContextProps) => {
+export const ChatContextProvider = ({ children }: ChildrenProps) => {
   // @ts-ignore
   const { currentUser }: AuthContextType | null = useContext(AuthContext);
 

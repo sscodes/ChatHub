@@ -27,12 +27,16 @@ const Search = () => {
   }, [username]);
 
   useEffect(() => {
-    if (!user && username.length !== 0 && enter) {
-      setOpen(true);
-      setErrorMessage('Could not find the user');
-    } else if (user || !enter) {
-      setOpen(false);
-    }
+    const timeOut = setTimeout(() => {
+      if (!user && username.length !== 0 && enter) {
+        setOpen(true);
+        setErrorMessage('Could not find the user');
+      } else if (user || !enter) {
+        setOpen(false);
+      }
+    }, 2000);
+
+    return () => clearTimeout(timeOut);
   }, [enter, user, username]);
 
   const handleClose = (
